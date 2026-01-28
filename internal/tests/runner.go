@@ -4,16 +4,16 @@
 package tests
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
+
+	claude "github.com/MateoSegura/claudesdk-go"
 )
 
 // ExtensionType represents the type of Claude Code extension being tested.
@@ -42,12 +42,11 @@ type TestRunner struct {
 // NewTestRunner creates a runner with default settings.
 // Automatically enables DryRun mode if Claude CLI is not available.
 func NewTestRunner() *TestRunner {
-	// Check if claude CLI is available
+	// Check if claude CLI is available using SDK
 	claudeBinary := "claude"
 	dryRun := false
 
-	cmd := exec.Command(claudeBinary, "--version")
-	if err := cmd.Run(); err != nil {
+	if !claude.CLIAvailable() {
 		dryRun = true
 		fmt.Println("Warning: Claude CLI not available - running in DRY RUN mode (structure validation only)")
 		fmt.Println("   To run full tests: install Claude Code CLI")
@@ -310,16 +309,11 @@ func (r *TestRunner) RunSuite(ctx context.Context, suite *Suite) (*SuiteResult, 
 	return result, nil
 }
 
-// runClaude executes the Claude CLI with an extension loaded.
+// runClaude executes the Claude CLI with an extension loaded using the SDK.
 func (r *TestRunner) runClaude(ctx context.Context, workDir string, extType ExtensionType, extension, prompt, ctxStr string) (string, error) {
 	// In dry run mode, return a simulated response for structure validation
 	if r.DryRun {
 		return r.simulateResponse(extension, prompt), nil
-	}
-
-	args := []string{
-		"--print",                        // Non-interactive mode
-		"--dangerously-skip-permissions", // Skip prompts for testing
 	}
 
 	// Copy extension to test workspace based on type
@@ -385,21 +379,23 @@ func (r *TestRunner) runClaude(ctx context.Context, workDir string, extType Exte
 	if ctxStr != "" {
 		fullPrompt = fmt.Sprintf("Context:\n%s\n\nTask:\n%s", ctxStr, prompt)
 	}
-	args = append(args, fullPrompt)
 
-	cmd := exec.CommandContext(ctx, r.ClaudeBinary, args...)
-	cmd.Dir = workDir
-
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
+	// Use SDK Session for Claude invocation
+	session, err := claude.NewSession(claude.SessionConfig{
+		WorkDir:         workDir,
+		SkipPermissions: true,
+		Timeout:         r.Timeout,
+	})
 	if err != nil {
-		return stdout.String(), fmt.Errorf("claude: %w: %s", err, stderr.String())
+		return "", fmt.Errorf("create session: %w", err)
 	}
 
-	return stdout.String(), nil
+	output, err := session.CollectAll(ctx, fullPrompt)
+	if err != nil {
+		return output, fmt.Errorf("claude: %w", err)
+	}
+
+	return output, nil
 }
 
 // createWorkspace creates an isolated test directory.

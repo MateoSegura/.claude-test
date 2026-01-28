@@ -187,7 +187,7 @@ func (br *BenchmarkResult) PrintReport() {
 	fmt.Println(strings.Repeat("=", 61))
 
 	// Summary table
-	fmt.Println("\n## Summary by Configuration\n")
+	fmt.Println("\n## Summary by Configuration")
 	fmt.Printf("%-20s %8s %8s %10s\n", "Config", "Success", "Score", "Duration")
 	fmt.Println(strings.Repeat("-", 50))
 
@@ -200,7 +200,7 @@ func (br *BenchmarkResult) PrintReport() {
 	}
 
 	// By difficulty breakdown
-	fmt.Println("\n## Success Rate by Difficulty\n")
+	fmt.Println("\n## Success Rate by Difficulty")
 	fmt.Printf("%-20s %10s %10s %10s\n", "Config", "Easy", "Medium", "Hard")
 	fmt.Println(strings.Repeat("-", 55))
 
@@ -214,7 +214,7 @@ func (br *BenchmarkResult) PrintReport() {
 
 	// Comparison if we have baseline
 	if baseline, ok := br.ConfigResults["baseline"]; ok {
-		fmt.Println("\n## Improvement vs Baseline\n")
+		fmt.Println("\n## Improvement vs Baseline")
 		for name, cr := range br.ConfigResults {
 			if name == "baseline" {
 				continue

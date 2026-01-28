@@ -214,7 +214,7 @@ func main() {
 
 	// Dry run mode
 	if dryRun {
-		fmt.Println("DRY RUN MODE - validating corpus structure only\n")
+		fmt.Println("DRY RUN MODE - validating corpus structure only")
 		for _, issue := range issues {
 			fmt.Printf("  [%s] %s (%s/%s)\n",
 				issue.ID, issue.Title, issue.Difficulty, issue.Language)
@@ -225,7 +225,7 @@ func main() {
 
 	// Run benchmark
 	fmt.Println("Starting benchmark run...")
-	fmt.Println("(This may take a while depending on issue count and complexity)\n")
+	fmt.Println("(This may take a while depending on issue count and complexity)")
 
 	ctx := context.Background()
 	result, err := runner.Run(ctx, filteredCorpus)

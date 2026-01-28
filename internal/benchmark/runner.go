@@ -1,7 +1,6 @@
 package benchmark
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -10,6 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	claude "github.com/MateoSegura/claudesdk-go"
 )
 
 // Config represents a .claude configuration to test.
@@ -234,29 +235,20 @@ func (r *BenchmarkRunner) buildPrompt(issue *Issue, repoDir string) string {
 	return sb.String()
 }
 
-// runClaude executes Claude CLI.
+// runClaude executes Claude CLI using the SDK.
 func (r *BenchmarkRunner) runClaude(ctx context.Context, workDir, prompt string) (string, error) {
-	ctx, cancel := context.WithTimeout(ctx, r.Timeout)
-	defer cancel()
-
-	args := []string{
-		"--print",
-		"--dangerously-skip-permissions",
-		prompt,
+	session, err := claude.NewSession(claude.SessionConfig{
+		WorkDir:         workDir,
+		SkipPermissions: true,
+		Timeout:         r.Timeout,
+	})
+	if err != nil {
+		return "", fmt.Errorf("create session: %w", err)
 	}
 
-	cmd := exec.CommandContext(ctx, r.ClaudeBinary, args...)
-	cmd.Dir = workDir
-
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
-	output := stdout.String()
-
+	output, err := session.CollectAll(ctx, prompt)
 	if err != nil {
-		return output, fmt.Errorf("claude: %w: %s", err, stderr.String())
+		return output, fmt.Errorf("claude: %w", err)
 	}
 
 	return output, nil

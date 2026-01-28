@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	claude "github.com/MateoSegura/claudesdk-go"
 )
 
 // EvalResult contains the evaluation outcome.
@@ -132,12 +134,20 @@ SCORE: [number]
 REASON: [explanation]
 `, issue.Description, criteria, truncateOutput(diffOutput, 3000), truncateOutput(output, 2000))
 
-	cmd := exec.CommandContext(ctx, r.ClaudeBinary, "--print", judgePrompt)
+	// Use SDK for LLM judge
+	session, err := claude.NewSession(claude.SessionConfig{
+		SkipPermissions: true,
+		Timeout:         2 * time.Minute,
+	})
+	if err != nil {
+		return EvalResult{
+			Success: false,
+			Score:   0.0,
+			Details: fmt.Sprintf("LLM judge session failed: %v", err),
+		}
+	}
 
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	err := cmd.Run()
+	response, err := session.CollectAll(ctx, judgePrompt)
 	if err != nil {
 		return EvalResult{
 			Success: false,
@@ -146,7 +156,6 @@ REASON: [explanation]
 		}
 	}
 
-	response := stdout.String()
 	score, reason := parseLLMJudgeResponse(response)
 
 	return EvalResult{

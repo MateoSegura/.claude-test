@@ -1,13 +1,13 @@
 package tests
 
 import (
-	"bytes"
 	"context"
 	"fmt"
-	"os/exec"
 	"regexp"
 	"strings"
 	"time"
+
+	claude "github.com/MateoSegura/claudesdk-go"
 )
 
 // ContainsText checks if output contains specific text.
@@ -163,15 +163,24 @@ OUTPUT TO EVALUATE:
 
 Does the output meet the criteria? (YES/NO + reason)`, criteria, truncate(output, 4000))
 
-		// Call Claude to judge
+		// Call Claude to judge using SDK
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
 
-		cmd := exec.CommandContext(ctx, "claude", "--print", judgePrompt)
-		var stdout bytes.Buffer
-		cmd.Stdout = &stdout
+		session, err := claude.NewSession(claude.SessionConfig{
+			SkipPermissions: true,
+			Timeout:         30 * time.Second,
+		})
+		if err != nil {
+			return Validation{
+				Name:    name,
+				Passed:  false,
+				Score:   0.0,
+				Message: fmt.Sprintf("LLM judge session error: %v", err),
+			}
+		}
 
-		err := cmd.Run()
+		response, err := session.CollectAll(ctx, judgePrompt)
 		if err != nil {
 			return Validation{
 				Name:    name,
@@ -181,7 +190,7 @@ Does the output meet the criteria? (YES/NO + reason)`, criteria, truncate(output
 			}
 		}
 
-		response := strings.TrimSpace(stdout.String())
+		response = strings.TrimSpace(response)
 		passed := strings.HasPrefix(strings.ToUpper(response), "YES")
 
 		return Validation{
