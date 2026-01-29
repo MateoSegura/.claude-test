@@ -382,9 +382,11 @@ func (r *TestRunner) runClaude(ctx context.Context, workDir string, extType Exte
 
 	// Use SDK Session for Claude invocation
 	session, err := claude.NewSession(claude.SessionConfig{
-		WorkDir:         workDir,
-		SkipPermissions: true,
-		Timeout:         r.Timeout,
+		LaunchOptions: claude.LaunchOptions{
+			WorkDir:         workDir,
+			SkipPermissions: true,
+			Timeout:         r.Timeout,
+		},
 	})
 	if err != nil {
 		return "", fmt.Errorf("create session: %w", err)

@@ -27,9 +27,21 @@ This framework tests whether your `.claude` configuration actually makes Claude 
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Two Types of Testing
+## Three Types of Testing
 
-### 1. Extension Tests (`cmd/runtest`)
+### 1. Config Validation (`configtest/`)
+
+Structural and dry-run validation of your `.claude` directory. Auto-discovers commands, skills, and settings — adding a new extension automatically creates new subtests.
+
+```bash
+# Fast structural + dry-run checks
+CLAUDE_CONFIG_DIR=./.claude go test ./configtest/...
+
+# Live tests that invoke the real Claude CLI (costs API credits)
+CLAUDE_CONFIG_DIR=./.claude go test -tags live ./configtest/...
+```
+
+### 2. Extension Tests (`cmd/runtest`)
 
 Tests that your extensions work as documented:
 - Does the skill respond appropriately?
@@ -40,36 +52,48 @@ Tests that your extensions work as documented:
 go run ./cmd/runtest --config ./.claude
 ```
 
-### 2. Benchmark Tests (`cmd/bench`)
+### 3. A/B Benchmark Tests (`cmd/configbench`)
 
-Tests whether your config makes Claude better at real tasks:
-- Clone real repos with real issues
-- Run Claude with/without your config
-- Measure success rate difference
+Docker-containerized A/B comparison: runs the same tasks N times with your config and N times without, then produces a statistical verdict.
 
 ```bash
-go run ./cmd/bench --config ~/.claude
+go run ./cmd/configbench \
+  --config ./.claude \
+  --corpus corpus/sample.yaml \
+  --attempts 5 \
+  --parallelism 2
 ```
 
 ## Project Structure
 
 ```
 .claude-test/
-├── .claude/                    # Submodule: your config being tested
+├── .claude/                    # Git submodule: config being tested
+├── claudesdk-go/               # Git submodule: Go SDK for Claude CLI
+├── configtest/                 # Config validation (separate Go module)
+│   ├── doc.go
+│   ├── discover.go             # Auto-discovery engine
+│   ├── structural_test.go      # Frontmatter, descriptions, naming
+│   ├── dryrun_test.go          # Exercises assertions without CLI
+│   └── live_test.go            # Real Claude CLI invocation (build tag: live)
 ├── cmd/
-│   ├── bench/                  # Benchmark CLI
+│   ├── configbench/            # Docker A/B benchmark CLI
+│   │   ├── main.go
+│   │   └── progress.go
 │   └── runtest/                # Extension test CLI
 ├── internal/
-│   ├── benchmark/              # Benchmark framework
-│   │   ├── corpus.go           # Issue/corpus loading
-│   │   ├── evaluator.go        # Test/LLM evaluation
-│   │   ├── results.go          # Result aggregation
-│   │   └── runner.go           # Execution engine
+│   ├── analysis/               # Statistical analysis & reporting
+│   ├── corpus/                 # Corpus types & YAML loading
+│   ├── docker/                 # Container lifecycle management
+│   ├── metrics/                # Metrics collection & parsing
+│   ├── orchestrator/           # A/B orchestration & worker pool
 │   └── tests/                  # Extension test framework
-│       ├── runner.go           # Test execution
-│       └── validators.go       # Output validators
-├── corpus/                     # Benchmark test cases
-│   └── sample.yaml             # Sample corpus
+├── corpus/                     # Benchmark test case definitions
+│   └── sample.yaml
+├── docs/
+│   ├── arch/poc.md             # Full architecture document
+│   ├── arch/poc/               # Phase implementation details
+│   └── diagrams/               # Auto-generated architecture diagrams
 ├── go.mod
 └── README.md
 ```
@@ -77,17 +101,26 @@ go run ./cmd/bench --config ~/.claude
 ## Quick Start
 
 ```bash
-# Clone with submodule
+# Clone with submodules
 git clone --recurse-submodules https://github.com/MateoSegura/.claude-test
+
+# Validate config structure (fast, no Claude CLI needed)
+CLAUDE_CONFIG_DIR=./.claude go test ./configtest/...
 
 # Run extension tests
 go run ./cmd/runtest --config ./.claude
 
-# Run benchmarks against your config
-go run ./cmd/bench --config ~/.claude --baseline
+# Run A/B benchmarks
+go run ./cmd/configbench \
+  --config ./.claude \
+  --corpus corpus/sample.yaml \
+  --attempts 5
 
-# Run specific difficulty
-go run ./cmd/bench --difficulty medium --language go
+# Dry-run to preview the execution plan
+go run ./cmd/configbench \
+  --config ./.claude \
+  --corpus corpus/sample.yaml \
+  --dry-run
 ```
 
 ## Creating Test Corpus
@@ -126,29 +159,30 @@ issues:
 ## Interpreting Results
 
 ```
-=============================================================
-BENCHMARK REPORT: sample-corpus
-Version: 1.0.0 | Run: 2024-01-15 14:30 | Duration: 45m
-=============================================================
+configbench v0.1.0 — Configuration Benchmark Report
+════════════════════════════════════════════════════
 
-## Summary by Configuration
+Verdict: HELPED (high confidence)
+  "Configuration improved success rate by 20% with no significant
+   cost increase. MCP tools were actively utilized."
 
-Config               Success    Score   Duration
---------------------------------------------------
-baseline                54%      58%       20m
-my-config               73%      78%       22m
-
-## Improvement vs Baseline
-
-  my-config: +19.0 percentage points
+Summary
+┌────────────┬────────────┬──────────┬────────┐
+│ Metric     │ Configured │ Baseline │ Delta  │
+├────────────┼────────────┼──────────┼────────┤
+│ Success    │ 80%        │ 60%      │ +20%*  │
+│ Score      │ 0.85       │ 0.72     │ +0.13* │
+│ Cost       │ $0.42      │ $0.38    │ +$0.04 │
+│ Turns      │ 8.2        │ 9.4      │ -1.2   │
+└────────────┴────────────┴──────────┴────────┘
+* statistically significant (p < 0.05)
 ```
-
-A +5 percentage point improvement is considered significant.
 
 ## Requirements
 
-- Go 1.23+
+- Go 1.24+
 - Claude CLI installed and authenticated
+- Docker (for A/B benchmarks)
 - Git (for cloning test repos)
 
 ## License

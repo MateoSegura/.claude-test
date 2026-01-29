@@ -1,0 +1,41 @@
+name: test-corpus
+version: "1.0"
+issues:
+  - id: go-nil-check
+    title: "Fix nil pointer dereference"
+    description: "Handler panics on nil body"
+    repo: "github.com/example/goapp"
+    ref: "main"
+    difficulty: easy
+    language: go
+    task_type: bug_fix
+    prompt: "Fix the nil pointer dereference in the request handler"
+    evaluation:
+      method: test_passes
+      command: "go test ./..."
+  - id: ts-auth
+    title: "Add OAuth2 authentication"
+    description: "Implement OAuth2 login flow"
+    repo: "github.com/example/webapp"
+    ref: "main"
+    difficulty: hard
+    language: typescript
+    task_type: feature
+    prompt: "Implement OAuth2 authentication with Google provider"
+    evaluation:
+      method: command
+      command: "npm test"
+      expected_exit_code: 0
+  - id: py-refactor
+    title: "Extract database layer"
+    description: "Move SQL to repository pattern"
+    repo: "github.com/example/pyapi"
+    ref: "main"
+    difficulty: medium
+    language: python
+    task_type: refactor
+    prompt: "Refactor database queries into repository pattern"
+    evaluation:
+      method: file_contains
+      file_path: "src/repository.py"
+      contains: "class Repository"

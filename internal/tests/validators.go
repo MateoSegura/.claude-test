@@ -168,8 +168,10 @@ Does the output meet the criteria? (YES/NO + reason)`, criteria, truncate(output
 		defer cancel()
 
 		session, err := claude.NewSession(claude.SessionConfig{
-			SkipPermissions: true,
-			Timeout:         30 * time.Second,
+			LaunchOptions: claude.LaunchOptions{
+				SkipPermissions: true,
+				Timeout:         30 * time.Second,
+			},
 		})
 		if err != nil {
 			return Validation{
