@@ -1,0 +1,47 @@
+You are debugging a Zephyr RTOS build failure for the ESP32 DevKit C board. Your goal is to identify and fix the root cause of the build error.
+
+## Build Information
+
+- **Board**: esp32_devkitc_wroom
+- **Application**: samples/net/wifi
+- **Build Command**: `west build -b esp32_devkitc_wroom samples/net/wifi`
+- **Known Issue**: WiFi driver Kconfig depends on a clock gating symbol that was removed in a SoC refactor
+
+## Your Task
+
+1. **Run the build command** to observe the actual error message:
+   ```bash
+   west build -b esp32_devkitc_wroom samples/net/wifi
+   ```
+
+2. **Analyze the error output** carefully:
+   - Identify which Kconfig symbols are unresolved
+   - Note any dependency chains mentioned in the error
+   - Look for references to clock gating or clock control symbols
+
+3. **Investigate the root cause**:
+   - Search for the problematic Kconfig symbol definition using Grep
+   - Check WiFi driver Kconfig files for dependencies
+   - Look for recent changes to ESP32 SoC Kconfig that might have removed clock-related symbols
+   - Verify if the symbol was renamed, moved, or truly removed
+
+4. **Fix the source code**:
+   - Make minimal, targeted changes to Kconfig files only
+   - Do NOT modify board configuration files, defconfig files, or prj.conf
+   - Do NOT change build system files or CMakeLists.txt
+   - Update Kconfig dependencies to use correct symbols
+   - If a symbol was removed, remove references to it or replace with the correct alternative
+
+5. **Verify the fix**:
+   - Clean the build directory: `rm -rf build/`
+   - Re-run the build command: `west build -b esp32_devkitc_wroom samples/net/wifi`
+   - Confirm the build completes successfully without Kconfig errors
+
+## Constraints
+
+- Only modify source code (Kconfig files in driver or SoC directories)
+- Do not modify board-specific files or application configuration
+- Keep changes minimal — only fix what's broken
+- Ensure the fix is architecturally correct for the Zephyr Kconfig system
+
+Start by running the build command and analyzing the error output.

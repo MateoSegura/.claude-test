@@ -1,0 +1,67 @@
+You are debugging a Zephyr RTOS build failure for the ESP32 DevKit-C board running the hello_world sample application.
+
+Your task is to fix the build by modifying source code only. Do not change build configurations, Kconfig files, CMakeLists.txt, or board definitions.
+
+## Step 1: Reproduce the Error
+
+Run the build command to see the actual failure:
+
+```
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+Examine the complete error output carefully. Identify:
+- Which file is failing to compile
+- What header or symbol is missing
+- The full error message from the compiler
+
+## Step 2: Diagnose Root Cause
+
+Before making any changes:
+- Locate the file that's failing to build
+- Read the file to understand what it's trying to include or use
+- Search for the missing header or symbol in the Zephyr tree using Grep
+- Understand why the dependency exists and whether it's necessary
+- Check if there are alternative headers or approaches that would work
+
+The error description mentions "syslimits.h which is not available in Zephyr's minimal libc" - this suggests a portability issue where ESP32 HAL code assumes a full POSIX environment.
+
+## Step 3: Apply Minimal Fix
+
+Your fix should:
+- Modify only the source files that are failing to build
+- Use standard C types and headers that are available in Zephyr's minimal libc
+- Follow Zephyr's coding conventions (use stdint.h types, check for NULL, use K_NO_WAIT in interrupt context)
+- Avoid adding wrapper macros or abstraction layers - make direct, clear changes
+- Preserve the original functionality while removing the problematic dependency
+
+Common Zephyr-compatible alternatives:
+- Instead of sys/types.h or syslimits.h, use stdint.h for int32_t, uint8_t, etc.
+- Instead of POSIX limits (LONG_MAX, etc.), use definitions from limits.h or define constants explicitly
+- Use Zephyr kernel APIs (k_malloc, k_mutex_lock) rather than POSIX equivalents
+
+## Step 4: Verify the Fix
+
+After making changes:
+1. Re-run the build command: `west build -b esp32_devkitc_wroom samples/hello_world`
+2. Confirm the build completes successfully with no errors
+3. Check that you didn't introduce new warnings
+
+## Critical Rules to Follow
+
+- **Check all return values**: If you add any function calls, verify success before proceeding
+- **Use stdint.h types**: int32_t, uint16_t, uint8_t instead of int, short, char for sized types
+- **Validate device readiness**: If touching device code, ensure device_is_ready() is called
+- **No abstraction layers**: Make direct changes to the code, don't wrap Zephyr APIs in macros
+- **Static for file scope**: If you add any file-scoped variables or functions, mark them static
+- **Use C89 block comments**: /* like this */ not // like this
+
+## Output Format
+
+Provide a clear summary of:
+1. What the error was
+2. What caused it (root cause)
+3. What you changed to fix it
+4. Confirmation that the build now succeeds
+
+Be precise and concise. Make the minimum changes necessary to fix the build.

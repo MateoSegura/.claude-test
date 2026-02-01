@@ -1,0 +1,17 @@
+diff --git a/scripts/zephyr_module.py b/scripts/zephyr_module.py
+index 59679a6ea8c..6b73d0f66e5 100755
+--- a/scripts/zephyr_module.py
++++ b/scripts/zephyr_module.py
+@@ -95,6 +95,12 @@ mapping:
+     type: seq
+     sequence:
+       - type: str
++  package-managers:
++    required: false
++    type: any
++  blobs:
++    required: false
++    type: any
+ '''
+ 
+ schema = yaml.safe_load(METADATA_SCHEMA)

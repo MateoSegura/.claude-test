@@ -1,0 +1,48 @@
+You are tasked with fixing a Zephyr RTOS build failure for the ESP32 DevKit C board running the WiFi sample application.
+
+## Build Environment
+
+- Board: esp32_devkitc_wroom
+- App: samples/net/wifi
+- Zephyr SDK and west are already configured
+- Build command: `west build -b esp32_devkitc_wroom samples/net/wifi`
+
+## Your Task
+
+Fix the build failure by making minimal, targeted changes to source code only. Do not modify build configuration files, board definitions, or Kconfig files unless absolutely necessary.
+
+## Workflow
+
+1. **Reproduce the error**: Run the build command first to see the actual failure output. Read the error messages carefully to understand what symbols, dependencies, or configurations are failing.
+
+2. **Diagnose the root cause**: The bug involves a WiFi driver Kconfig dependency on a clock gating symbol that was removed during a SoC refactor. Use Grep to search for the problematic symbol in driver files, Kconfig files, and SoC definitions. Trace how the missing symbol affects the build.
+
+3. **Identify the minimal fix**: Determine whether the fix requires:
+   - Removing stale Kconfig dependencies
+   - Updating driver code to use replacement symbols
+   - Adjusting conditional compilation guards
+   
+   Prefer fixes that align with Zephyr's existing patterns for the ESP32 SoC.
+
+4. **Apply the fix**: Use Edit to make precise changes. Follow these principles:
+   - Keep changes minimal — fix only what is broken
+   - Use Zephyr's standard APIs and Kconfig patterns
+   - Ensure code follows Zephyr coding style (C89 comments, stdint.h types, proper error checking)
+   - Avoid adding abstraction layers or custom macros
+   - If touching device initialization, validate device readiness before use
+   - If modifying Kconfig, ensure dependencies are accurate and complete
+
+5. **Verify the fix**: Re-run the build command. If it fails, diagnose the new error and iterate. Continue until the build completes successfully.
+
+## Key Constraints
+
+- Only modify source code (.c, .h files) or Kconfig files if required by the error
+- Do not change board configuration, overlays, or CMakeLists.txt
+- Use existing Zephyr APIs directly — no custom wrappers
+- Follow Zephyr naming conventions (subsystem prefixes, snake_case)
+- Check all error returns if you modify code that calls Zephyr APIs
+- Use `device_is_ready()` checks for any device handle before use
+
+## Success Criteria
+
+The build command `west build -b esp32_devkitc_wroom samples/net/wifi` completes without errors.

@@ -1,0 +1,39 @@
+You are debugging a Zephyr RTOS build failure for the esp32_devkitc_wroom board running the samples/hello_world application.
+
+Your task is to fix the build failure by modifying only the necessary source code files. Do not modify board configurations, build settings, or Kconfig files unless absolutely necessary.
+
+## Steps to follow:
+
+1. **Reproduce the error**: Run the build command to see the actual failure:
+   ```
+   west build -b esp32_devkitc_wroom samples/hello_world
+   ```
+
+2. **Analyze the error**: Read the complete error output carefully. The error is related to a linker script bug where the heap sentry symbol is placed at the wrong address, causing an undefined reference during the final link stage for Xtensa targets.
+
+3. **Investigate the root cause**: 
+   - Search for files related to heap sentry symbols and linker scripts
+   - Look for Xtensa-specific linker script definitions
+   - Identify where the heap sentry symbol should be defined or referenced
+   - Use Grep to search for relevant symbol names mentioned in the error
+
+4. **Develop a minimal fix**:
+   - Make targeted changes to fix the symbol placement issue
+   - Avoid unnecessary refactoring or style changes
+   - Focus only on resolving the linker error
+
+5. **Verify the fix**: Re-run the build command to confirm the error is resolved:
+   ```
+   west build -b esp32_devkitc_wroom samples/hello_world
+   ```
+
+6. **Iterate if needed**: If the build still fails, analyze the new error and adjust your fix accordingly.
+
+## Important constraints:
+
+- Fix only the source code that causes the linker error
+- Do not modify board definitions, devicetree files, or Kconfig unless the error explicitly requires it
+- Keep changes minimal and targeted
+- Ensure the build completes successfully with exit code 0
+
+Start by running the build command to see the exact error message.

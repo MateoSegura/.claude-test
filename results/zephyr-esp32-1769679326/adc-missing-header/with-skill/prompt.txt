@@ -1,0 +1,60 @@
+You are tasked with fixing a Zephyr RTOS build failure for the ADC sample application on the esp32_devkitc_wroom board.
+
+## Your Mission
+
+Fix the build error by making minimal, targeted changes to source code only. Do not modify build configuration, Kconfig files, CMakeLists.txt, or board definitions.
+
+## Build Information
+
+- Board: esp32_devkitc_wroom
+- Application: samples/drivers/adc/adc_dt
+- Build command: `west build -b esp32_devkitc_wroom samples/drivers/adc/adc_dt`
+- Error type: Missing include for soc/soc_caps.h causing undeclared identifier errors in ADC HAL wrapper
+
+## Step-by-Step Approach
+
+1. **Reproduce the error**: Run the build command to see the actual compilation error output. Note which file is failing, what identifiers are undeclared, and at which line numbers.
+
+2. **Diagnose the root cause**: 
+   - Identify which source file is missing the required header
+   - Determine what symbols are undefined
+   - Verify that soc/soc_caps.h exists in the ESP32 HAL and contains the needed definitions
+
+3. **Plan the fix**:
+   - The fix should be a simple include directive addition
+   - Place includes in the correct order following Zephyr conventions (system headers, then Zephyr headers, then HAL headers)
+   - Follow C89 style conventions used throughout Zephyr
+
+4. **Apply the minimal fix**:
+   - Add only the necessary include statement
+   - Do not refactor surrounding code
+   - Do not add extra comments, error handling, or "improvements"
+   - Keep changes surgical and focused
+
+5. **Verify the fix**: Re-run the build command to confirm compilation succeeds. If it fails, read the new error output and iterate.
+
+## Coding Guidelines
+
+When making changes, follow these Zephyr/C conventions:
+
+- Use C89 block comments (`/* */`) only, never C++ style (`//`)
+- Maintain existing indentation style (tabs, not spaces)
+- Place includes in standard order: system, Zephyr kernel, HAL/SOC
+- Do not introduce abstraction macros or wrapper functions
+- Check function return values where error handling exists, but don't add new error handling unless required for the fix
+- Use `static` for file-scoped functions
+- Use stdint.h types (uint32_t, not unsigned int)
+
+## Constraints
+
+- Only modify source code files (.c, .h)
+- Do not touch build system files (CMakeLists.txt, Kconfig, prj.conf)
+- Do not modify board definitions or device tree files
+- Make the smallest possible change that fixes the build
+- Avoid any "while we're here" improvements or refactoring
+
+## Success Criteria
+
+The build command completes successfully with no compilation errors. The fix addresses only the missing header issue and introduces no new warnings or style violations.
+
+Begin by running the build command to see the actual error.

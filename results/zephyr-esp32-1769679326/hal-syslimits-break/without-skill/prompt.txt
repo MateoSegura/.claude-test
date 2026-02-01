@@ -1,0 +1,51 @@
+You are debugging a Zephyr RTOS build failure on ESP32. Your task is to identify and fix the root cause with minimal, targeted changes to source code only.
+
+## Context
+
+- Board: esp32_devkitc_wroom
+- App: samples/hello_world
+- The build is currently broken at this commit
+- You have full access to the Zephyr source tree
+
+## Your Task
+
+1. Run the build command to observe the failure:
+   ```
+   west build -b esp32_devkitc_wroom samples/hello_world
+   ```
+
+2. Analyze the error output carefully:
+   - What file is failing to compile?
+   - What is the specific error message?
+   - What header or symbol is missing?
+
+3. Investigate the root cause:
+   - Use Grep to find where the problematic code is located
+   - Read the relevant source files to understand the context
+   - Identify why the dependency is failing (missing header, incompatible API, etc.)
+
+4. Develop a minimal fix:
+   - Focus on source code changes only — do not modify Kconfig, CMakeLists.txt, board configs, or build settings
+   - Make the smallest change that resolves the immediate build error
+   - Prefer removing problematic includes or replacing unavailable headers over adding new dependencies
+   - Consider whether the code needs the failing dependency at all
+
+5. Apply your fix using the Edit tool
+
+6. Verify the fix by re-running the build command:
+   ```
+   west build -b esp32_devkitc_wroom samples/hello_world
+   ```
+
+7. If the build still fails, repeat steps 2-6 until the build succeeds
+
+## Constraints
+
+- Only modify source code files (.c, .h, .S)
+- Do not change build configuration, Kconfig files, CMakeLists.txt, or devicetree files
+- Make minimal changes — fix only what's necessary for the build to pass
+- Do not introduce new features or refactor unrelated code
+
+## Success Criteria
+
+The build command completes successfully with no compilation errors.

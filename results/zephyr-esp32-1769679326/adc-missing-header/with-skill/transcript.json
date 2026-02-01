@@ -1,0 +1,1144 @@
+[
+  {
+    "type": "system",
+    "subtype": "init",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "model": "claude-opus-4-5-20251101",
+    "uuid": "c5523b95-adf0-4f15-b052-c21acdf46540",
+    "permissionMode": "default",
+    "tools": [
+      "Task",
+      "TaskOutput",
+      "Bash",
+      "Glob",
+      "Grep",
+      "ExitPlanMode",
+      "Read",
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "WebFetch",
+      "TodoWrite",
+      "WebSearch",
+      "TaskStop",
+      "AskUserQuestion",
+      "Skill",
+      "EnterPlanMode",
+      "ToolSearch"
+    ]
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "8f263ca1-8ac5-4c7c-bf45-a1552e7a670a",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "\n\nI'll start by reproducing the build error to see the exact failure."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "d2cdd2fa-f7c3-4ddc-b488-8e3db9e390d2",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "TodoWrite",
+          "id": "toolu_01DNvAJjpBwpzDHkLCxsqSAd",
+          "input": {
+            "todos": [
+              {
+                "activeForm": "Reproducing the build error",
+                "content": "Reproduce the build error",
+                "status": "in_progress"
+              },
+              {
+                "activeForm": "Diagnosing the root cause",
+                "content": "Diagnose the root cause",
+                "status": "pending"
+              },
+              {
+                "activeForm": "Applying the minimal fix",
+                "content": "Apply the minimal fix",
+                "status": "pending"
+              },
+              {
+                "activeForm": "Verifying the fix",
+                "content": "Verify the fix compiles successfully",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "16555271-856d-4779-b514-7a1e2c62d51c",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01DNvAJjpBwpzDHkLCxsqSAd",
+          "content": "Todos have been modified successfully. Ensure that you continue to use the todo list to track your progress. Please proceed with the current tasks if applicable"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "88057779-c396-4b73-9899-29c8664a9cf5",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01PWUnhHRBiaJ2XYcBh3aGFJ",
+          "input": {
+            "command": "west build -b esp32_devkitc_wroom samples/drivers/adc/adc_dt 2\u003e\u00261 | tail -80",
+            "description": "Run the ADC sample build to reproduce the error",
+            "timeout": 300000
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "c13a1830-c62c-42df-b8ab-a7055765f843",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01PWUnhHRBiaJ2XYcBh3aGFJ",
+          "content": "-- west build: generating a build system\nLoading Zephyr default modules (Zephyr base).\n-- Application: /root/zephyrproject/zephyr/samples/drivers/adc/adc_dt\n-- CMake version: 3.22.1\n-- Found Python3: /usr/bin/python3 (found suitable version \"3.10.12\", minimum required is \"3.10\") found components: Interpreter \n-- Cache files will be written to: /root/.cache/zephyr\n-- Zephyr version: 4.3.0-rc2 (/root/zephyrproject/zephyr)\n-- Found west (found suitable version \"1.5.0\", minimum required is \"0.14.0\")\nNo board named 'esp32_devkitc_wroom' found. Did you mean:\n\nesp32_devkitc\nesp32s3_devkitm\nesp32s3_devkitc\n\nRun 'west boards' for the full list.\nCMake Error at /root/zephyrproject/zephyr/cmake/modules/boards.cmake:225 (message):\n  Invalid BOARD; see above.\nCall Stack (most recent call first):\n  /root/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:131 (include)\n  /root/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)\n  /root/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)\n  CMakeLists.txt:5 (find_package)\n\n\n-- Configuring incomplete, errors occurred!\nFATAL ERROR: command exited with status 1: /usr/bin/cmake -DWEST_PYTHON=/usr/bin/python3 -B/root/zephyrproject/zephyr/build -GNinja -DBOARD=esp32_devkitc_wroom -S/root/zephyrproject/zephyr/samples/drivers/adc/adc_dt"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "77ab393b-58b3-426e-942e-0062c482bab9",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "The board name has changed. Let me try with the correct board name `esp32_devkitc`."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "50215b70-58f2-4985-9835-fd6d71cbed1f",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01VfDBbdkyhc6ZWZEtbRhyAu",
+          "input": {
+            "command": "rm -rf /root/zephyrproject/zephyr/build \u0026\u0026 west build -b esp32_devkitc samples/drivers/adc/adc_dt 2\u003e\u00261 | tail -100",
+            "description": "Rebuild with correct board name esp32_devkitc",
+            "timeout": 300000
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "ba6707f6-1441-415a-affb-cb03f6b24458",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01VfDBbdkyhc6ZWZEtbRhyAu",
+          "content": "-- west build: generating a build system\nLoading Zephyr default modules (Zephyr base).\n-- Application: /root/zephyrproject/zephyr/samples/drivers/adc/adc_dt\n-- CMake version: 3.22.1\n-- Found Python3: /usr/bin/python3 (found suitable version \"3.10.12\", minimum required is \"3.10\") found components: Interpreter \n-- Cache files will be written to: /root/.cache/zephyr\n-- Zephyr version: 4.3.0-rc2 (/root/zephyrproject/zephyr)\n-- Found west (found suitable version \"1.5.0\", minimum required is \"0.14.0\")\nCMake Error at /root/zephyrproject/zephyr/cmake/modules/boards.cmake:285 (message):\n  Board qualifiers `/esp32` for board `esp32_devkitc` not found.  Please\n  specify a valid board target.\n\n  Valid board targets for esp32_devkitc are:\n\n  esp32_devkitc/esp32/procpu\n\n  esp32_devkitc/esp32/appcpu\n\nCall Stack (most recent call first):\n  /root/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:131 (include)\n  /root/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)\n  /root/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)\n  CMakeLists.txt:5 (find_package)\n\n\n-- Configuring incomplete, errors occurred!\nFATAL ERROR: command exited with status 1: /usr/bin/cmake -DWEST_PYTHON=/usr/bin/python3 -B/root/zephyrproject/zephyr/build -GNinja -DBOARD=esp32_devkitc -S/root/zephyrproject/zephyr/samples/drivers/adc/adc_dt"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "77848f58-8d06-40ac-bfe1-b09da4ca8a0a",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Need the full qualifier. Let me use `esp32_devkitc/esp32/procpu`."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "5061683f-b081-4f10-9161-aadffe17a0a8",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01U5Vb6rGKRPGSHwvR2fjhze",
+          "input": {
+            "command": "rm -rf /root/zephyrproject/zephyr/build \u0026\u0026 west build -b esp32_devkitc/esp32/procpu samples/drivers/adc/adc_dt 2\u003e\u00261 | tail -120",
+            "description": "Rebuild with full board qualifier",
+            "timeout": 300000
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "89685882-69a0-4642-b3df-f98a4e62ee3b",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01U5Vb6rGKRPGSHwvR2fjhze",
+          "content": "[127/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_system/esp_err.c.obj\n[128/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_system/port/soc/esp32/system_internal.c.obj\n[129/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/log/log_noos.c.obj\n[130/229] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/sw_isr_common.c.obj\n[131/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/port/heap/heap_caps_zephyr.c.obj\n[132/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/hal/esp32/clk_tree_hal.c.obj\n[133/229] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/init.c.obj\n[134/229] Building C object zephyr/CMakeFiles/zephyr_pre0.dir/misc/empty_file.c.obj\n[135/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_timer/src/esp_timer_impl_lac.c.obj\n[136/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_mm/esp_mmu_map.c.obj\n[137/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/port/host_flash/cache_utils.c.obj\n[138/229] Building C object zephyr/arch/common/CMakeFiles/isr_tables.dir/isr_tables.c.obj\n[139/229] Building ASM object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/debug_helpers_asm.S.obj\n[140/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/common/esp_restart.c.obj\n[141/229] Linking C static library zephyr/arch/common/libisr_tables.a\n[142/229] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/dynamic_isr.c.obj\n[143/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/common/flash_init.c.obj\n[144/229] Linking C static library zephyr/arch/common/libarch__common.a\n[145/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/esp32/src/soc_flash_init.c.obj\n[146/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/zephyr/port/bootloader/bootloader_flash.c.obj\n[147/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/xtensa_backtrace.c.obj\n[148/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_timer/src/esp_timer.c.obj\n[149/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/irq_manage.c.obj\n[150/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/fatal.c.obj\n[151/229] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/time.c.obj\n[152/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/cpu_idle.c.obj\n[153/229] Building C object zephyr/CMakeFiles/zephyr.dir/root/zephyrproject/modules/hal/espressif/components/esp_hw_support/sleep_modes.c.obj\n[154/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/thread.c.obj\n[155/229] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/fnmatch.c.obj\n[156/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/assert.c.obj\n[157/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/prep_c.c.obj\n[158/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/cbprintf.c.obj\n[159/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/chk_fail.c.obj\n[160/229] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/abort.c.obj\n[161/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/locks.c.obj\n[162/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/stdio.c.obj\n[163/229] Building C object zephyr/arch/arch/xtensa/core/CMakeFiles/arch__xtensa__core.dir/vector_handlers.c.obj\n[164/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/exit.c.obj\n[165/229] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_control_esp32.c.obj\n[166/229] Building C object zephyr/lib/libc/picolibc/CMakeFiles/lib__libc__picolibc.dir/errno_wrap.c.obj\n[167/229] Linking C static library zephyr/libzephyr.a\n[168/229] Linking C static library zephyr/arch/arch/xtensa/core/libarch__xtensa__core.a\n[169/229] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/malloc.c.obj\n[170/229] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getentropy.c.obj\n[171/229] Linking C static library zephyr/drivers/clock_control/libdrivers__clock_control.a\n[172/229] Linking C static library zephyr/lib/libc/picolibc/liblib__libc__picolibc.a\n[173/229] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/common.c.obj\n[174/229] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getopt/getopt_common.c.obj\n[175/229] Linking C static library zephyr/lib/libc/common/liblib__libc__common.a\n[176/229] Building C object zephyr/drivers/adc/CMakeFiles/drivers__adc.dir/adc_common.c.obj\n[177/229] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getopt/getopt.c.obj\n[178/229] Building C object zephyr/drivers/console/CMakeFiles/drivers__console.dir/uart_console.c.obj\n[179/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/main_weak.c.obj\n[180/229] Linking C static library zephyr/lib/posix/c_lib_ext/liblib__posix__c_lib_ext.a\n[181/229] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/xtensa_sys_timer.c.obj\n[182/229] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/sys_clock_init.c.obj\n[183/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/version.c.obj\n[184/229] Linking C static library zephyr/drivers/console/libdrivers__console.a\n[185/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/banner.c.obj\n[186/229] Linking C static library zephyr/drivers/timer/libdrivers__timer.a\n[187/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/idle.c.obj\n[188/229] Building C object zephyr/drivers/serial/CMakeFiles/drivers__serial.dir/uart_esp32.c.obj\n[189/229] Building C object zephyr/drivers/adc/CMakeFiles/drivers__adc.dir/adc_esp32.c.obj\n[190/229] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/pinctrl_esp32.c.obj\n[191/229] Linking C static library zephyr/drivers/serial/libdrivers__serial.a\n[192/229] Linking C static library zephyr/drivers/adc/libdrivers__adc.a\n[193/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/busy_wait.c.obj\n[194/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/errno.c.obj\n[195/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mutex.c.obj\n[196/229] Linking C static library zephyr/drivers/pinctrl/libdrivers__pinctrl.a\n[197/229] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_esp32.c.obj\n[198/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/msg_q.c.obj\n[199/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/fatal.c.obj\n[200/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/float.c.obj\n[201/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mailbox.c.obj\n[202/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/device.c.obj\n[203/229] Linking C static library zephyr/drivers/interrupt_controller/libdrivers__interrupt_controller.a\n[204/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/kheap.c.obj\n[205/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/init.c.obj\n[206/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/system_work_q.c.obj\n[207/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mem_slab.c.obj\n[208/229] Building C object zephyr/drivers/gpio/CMakeFiles/drivers__gpio.dir/gpio_esp32.c.obj\n[209/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/condvar.c.obj\n[210/229] Linking C static library zephyr/drivers/gpio/libdrivers__gpio.a\n[211/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/thread.c.obj\n[212/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sem.c.obj\n[213/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/stack.c.obj\n[214/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeslicing.c.obj\n[215/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/dynamic_disabled.c.obj\n[216/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/queue.c.obj\n[217/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/pipe.c.obj\n[218/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mempool.c.obj\n[219/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timer.c.obj\n[220/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/work.c.obj\n[221/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeout.c.obj\n[222/229] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sched.c.obj\n[223/229] Linking C static library zephyr/kernel/libkernel.a\n[224/229] Linking C executable zephyr/zephyr_pre0.elf\n[225/229] Generating linker.cmd\n[226/229] Generating isr_tables.c, isr_tables_vt.ld, isr_tables_swi.ld\n[227/229] Building C object zephyr/CMakeFiles/zephyr_final.dir/misc/empty_file.c.obj\n[228/229] Building C object zephyr/CMakeFiles/zephyr_final.dir/isr_tables.c.obj\n[229/229] Linking C executable zephyr/zephyr.elf\nMemory region         Used Size  Region Size  %age Used\n           FLASH:      147060 B    4194048 B      3.51%\n     iram0_0_seg:       32512 B       224 KB     14.17%\n     dram0_0_seg:       12272 B       192 KB      6.24%\n     dram1_0_seg:          5 KB        96 KB      5.21%\n     irom0_0_seg:       15988 B     11456 KB      0.14%\n     drom0_0_seg:         64 KB         4 MB      1.56%\n    rtc_iram_seg:          0 GB         8 KB      0.00%\n    rtc_slow_seg:          0 GB         8 KB      0.00%\n    rtc_data_seg:          0 GB         8 KB      0.00%\n        IDT_LIST:          0 GB         8 KB      0.00%\nGenerating files from /root/zephyrproject/zephyr/build/zephyr/zephyr.elf for board: esp32_devkitc\nesptool v5.1.0\nCreating ESP32 image...\nImage has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.\nMerged 12 ELF sections.\nSuccessfully created ESP32 image."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "a6fa582f-ac26-43d4-8b8b-2ac3898f8008",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "The build succeeded with the correct board name `esp32_devkitc/esp32/procpu`. Let me check the recent commit history to understand what the \"broken\" commit changed, since the top commit message says \"broken\"."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "c7ef1006-5065-4537-9cf1-ac73c7a1c332",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "TodoWrite",
+          "id": "toolu_01JdGdUnSmwSzNouoGBJuFqz",
+          "input": {
+            "todos": [
+              {
+                "activeForm": "Reproducing the build error",
+                "content": "Reproduce the build error",
+                "status": "completed"
+              },
+              {
+                "activeForm": "Investigating the broken commit",
+                "content": "Diagnose the root cause - check 'broken' commit",
+                "status": "in_progress"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "97bfce89-7f80-4692-8e85-c21141a6572c",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01JdGdUnSmwSzNouoGBJuFqz",
+          "content": "Todos have been modified successfully. Ensure that you continue to use the todo list to track your progress. Please proceed with the current tasks if applicable"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "110e9c38-5355-4729-941b-09ab077da0eb",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01YaJ7AWVRtcFkxJUKszesEa",
+          "input": {
+            "command": "git show --stat HEAD",
+            "description": "Check what the 'broken' commit changed"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "3eafe551-562d-41da-a1cf-14d19750fa1f",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01YaJ7AWVRtcFkxJUKszesEa",
+          "content": "commit cfdea5bde124d684c5fe02114afe342de42639cb\nAuthor: bench \u003cbench@local\u003e\nDate:   Thu Jan 29 09:40:02 2026 +0000\n\n    broken\n\n .claude/skills/coding-standard-c-zephyr/SKILL.md   |  224 ++\n .../skills/coding-standard-c-zephyr/STANDARD.md    | 2238 ++++++++++++++++++++\n .../reference/code-review.md                       |  108 +\n .../reference/quick-reference.md                   |  172 ++\n .../skills/coding-standard-c-zephyr/rules/cicd.md  |  483 +++++\n .../coding-standard-c-zephyr/rules/comments.md     |   68 +\n .../coding-standard-c-zephyr/rules/concurrency.md  |  305 +++\n .../coding-standard-c-zephyr/rules/control-flow.md |  215 ++\n .../coding-standard-c-zephyr/rules/device-tree.md  |   41 +\n .../rules/documentation.md                         |   80 +\n .../rules/error-handling.md                        |  311 +++\n .../coding-standard-c-zephyr/rules/formatting.md   |  115 +\n .../coding-standard-c-zephyr/rules/kconfig.md      |   49 +\n .../coding-standard-c-zephyr/rules/macros.md       |  140 ++\n .../coding-standard-c-zephyr/rules/memory.md       |  305 +++\n .../coding-standard-c-zephyr/rules/naming.md       |  123 ++\n .../rules/power-management.md                      |   65 +\n .../coding-standard-c-zephyr/rules/security.md     |  209 ++\n .../coding-standard-c-zephyr/rules/structure.md    |   54 +\n .../coding-standard-c-zephyr/rules/testing.md      |  181 ++\n .../skills/coding-standard-c-zephyr/rules/types.md |   83 +\n .../tooling/clang-format.md                        |   91 +\n .../coding-standard-c-zephyr/tooling/clang-tidy.md |   89 +\n .../coding-standard-c-zephyr/tooling/cppcheck.md   |   54 +\n .../coding-standard-c-zephyr/tooling/pre-commit.md |   65 +\n 25 files changed, 5868 insertions(+)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "7b760d30-c5e4-4a85-88cc-d6e5c69c4718",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "The \"broken\" commit only added skill documentation files, no source code changes. Let me check if there's actually a pre-existing build issue with the ADC HAL wrapper. The build command in the task description specifies `esp32_devkitc_wroom` which doesn't exist as a board. The build with the correct board name succeeds. Let me check if the issue might be with a different file - the task mentions `soc/soc_caps.h` and ADC HAL wrapper issues."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "809445b7-cf2f-45e3-85da-ffb064a3dd77",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01CZED6RS59rtn2T4QaLCxJc",
+          "input": {
+            "command": "git diff HEAD~1 -- '*.c' '*.h' 2\u003e\u00261",
+            "description": "Check if any source files changed in broken commit"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "152d925a-5f36-4add-b00b-3b126b6e7246",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01CZED6RS59rtn2T4QaLCxJc"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "a8a81c66-18e9-41e5-8ff8-f050d4b30019",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "No source code changes in the \"broken\" commit. Let me look more carefully at the build - maybe there's a warning I missed, or perhaps the issue is specifically with `soc_caps.h` in the HAL."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "f6e4b9f2-8da6-4b3e-804f-4feccef391d0",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01FhmVZaq3izT53HMHPb8xVU",
+          "input": {
+            "command": "rm -rf /root/zephyrproject/zephyr/build \u0026\u0026 west build -b esp32_devkitc/esp32/procpu samples/drivers/adc/adc_dt 2\u003e\u00261 | grep -iE \"(error|warning|undeclared|soc_caps)\" | head -30",
+            "description": "Check for any errors or warnings in the build",
+            "timeout": 300000
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "252693a9-cbc4-4398-a7e7-d35020bfe0a5",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01FhmVZaq3izT53HMHPb8xVU"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "dc669621-0aec-4e1c-a91b-be8aaaacfc7f",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "The build succeeds cleanly. Let me search the ESP ADC HAL files for anything related to `soc_caps.h` to understand what the task is referring to."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "f0d66f6f-952a-4e3f-b536-3b396378d58a",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Task",
+          "id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+          "input": {
+            "description": "Find ADC HAL wrapper files",
+            "prompt": "Search the Zephyr codebase at /root/zephyrproject for ADC HAL wrapper files related to ESP32. Look in:\n1. /root/zephyrproject/modules/hal/espressif/ for any adc_hal files\n2. /root/zephyrproject/zephyr/drivers/adc/ for esp32 adc driver\n\nFor each file found, check if it includes `soc/soc_caps.h`. List all files with their paths and whether they include soc_caps.h or not. Also check if any of these files use SOC_ADC macros (like SOC_ADC_SUPPORTED, SOC_ADC_PERIPH_NUM, etc.) without including the header that defines them.",
+            "subagent_type": "Explore"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "b3664a55-08d9-4752-8fae-07bb06fcf3ea",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Search the Zephyr codebase at /root/zephyrproject for ADC HAL wrapper files related to ESP32. Look in:\n1. /root/zephyrproject/modules/hal/espressif/ for any adc_hal files\n2. /root/zephyrproject/zephyr/drivers/adc/ for esp32 adc driver\n\nFor each file found, check if it includes `soc/soc_caps.h`. List all files with their paths and whether they include soc_caps.h or not. Also check if any of these files use SOC_ADC macros (like SOC_ADC_SUPPORTED, SOC_ADC_PERIPH_NUM, etc.) without including the header that defines them."
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "9e0a1b73-4ca1-4aad-868d-dfa047c3e397",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Glob",
+          "id": "toolu_018GHbGmjKxt1WVu8Wd5ZbpC",
+          "input": {
+            "pattern": "/root/zephyrproject/modules/hal/espressif/**/adc_hal*"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "97e8ad0e-357f-4a8b-94cb-8b79d77f916d",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Glob",
+          "id": "toolu_016UfGpbLDwA6ogiort2mB5V",
+          "input": {
+            "pattern": "/root/zephyrproject/zephyr/drivers/adc/*esp32*"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "f3787ee6-749a-477b-b575-1cae855feb24",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_019BywKgyRnh91xLb5GRDna8",
+          "input": {
+            "command": "find /root/zephyrproject/modules/hal/espressif -name \"*adc_hal*\" -type f 2\u003e/dev/null",
+            "description": "Find all adc_hal files in espressif HAL module"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "5d9199ed-1dc4-46f7-9c9e-4932bdb0881e",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_016UfGpbLDwA6ogiort2mB5V",
+          "content": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32_dma.c\n/root/zephyrproject/zephyr/drivers/adc/adc_esp32.c\n/root/zephyrproject/zephyr/drivers/adc/Kconfig.esp32\n/root/zephyrproject/zephyr/drivers/adc/adc_esp32.h"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "1e5b59f1-ba71-4275-ba72-baf070f4264f",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_018GHbGmjKxt1WVu8Wd5ZbpC",
+          "content": "/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal.h\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "bcad2bd8-eaf5-4b5c-9657-419f180d2a15",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_019BywKgyRnh91xLb5GRDna8",
+          "content": "/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal.h\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "929c4c15-b520-42b5-bf28-ee0873bfcef3",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01H2PDnbhQBsw65FYsdX2Fmg",
+          "input": {
+            "file_path": "/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "cd9caf7d-6328-46d5-ac7f-7ed8fb6ce377",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01QkkxrAg296JevYSztZmRoA",
+          "input": {
+            "file_path": "/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "30ea1c71-5d97-40ab-aa5f-e53c900fbf3a",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01WrsCroz3janxASxSeVSVMA",
+          "input": {
+            "file_path": "/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal.h"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "1189653f-70f3-479e-9de2-acef716baf06",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01AyWmJAYjSGUeBVRf3qi1oq",
+          "input": {
+            "file_path": "/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "519f337c-5cc0-44ac-b684-4b7855447e5e",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01QymMzuNXfLSBhwHA74MNmr",
+          "input": {
+            "file_path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32.c"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "f45b7880-55dc-44e6-939b-e151942d976c",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_01Bojr4t3QHoe4GSEKnBRJqn",
+          "input": {
+            "file_path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32_dma.c"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "c288925d-054f-410e-8355-a544c0d6dc97",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "id": "toolu_017NpVhDemPZhYXLU2anXEY1",
+          "input": {
+            "file_path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32.h"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "0d412b10-d274-42cf-bb27-afe7de96571a",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01H2PDnbhQBsw65FYsdX2Fmg",
+          "content": "     1→/*\n     2→ * SPDX-FileCopyrightText: 2019-2023 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#include \u003czephyr/sys/util.h\u003e\n     8→#include \"sdkconfig.h\"\n     9→#include \"soc/soc_caps.h\"\n    10→#include \"hal/adc_hal_common.h\"\n    11→#include \"hal/adc_ll.h\"\n    12→#include \"hal/assert.h\"\n    13→\n    14→/*---------------------------------------------------------------\n    15→                    Controller Setting\n    16→---------------------------------------------------------------*/\n    17→static adc_ll_controller_t get_controller(adc_unit_t unit, adc_hal_work_mode_t work_mode)\n    18→{\n    19→    if (unit == ADC_UNIT_1) {\n    20→        switch (work_mode) {\n    21→#if SOC_ULP_HAS_ADC\n    22→            case ADC_HAL_ULP_FSM_MODE:\n    23→                return ADC_LL_CTRL_ULP;\n    24→#endif\n    25→            case ADC_HAL_SINGLE_READ_MODE:\n    26→#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n    27→                return ADC_LL_CTRL_DIG;\n    28→#elif SOC_ADC_RTC_CTRL_SUPPORTED\n    29→                return ADC_LL_CTRL_RTC;\n    30→#endif\n    31→            case ADC_HAL_CONTINUOUS_READ_MODE:\n    32→                return ADC_LL_CTRL_DIG;\n    33→            default:\n    34→                abort();\n    35→                return ADC_LL_CTRL_DIG; //avoid -Wreturn-type\n    36→        }\n    37→    } else {\n    38→        switch (work_mode) {\n    39→#if SOC_ULP_HAS_ADC\n    40→            case ADC_HAL_ULP_FSM_MODE:\n    41→                return ADC_LL_CTRL_ULP;\n    42→#endif\n    43→#if !SOC_ADC_ARBITER_SUPPORTED                  //No ADC2 arbiter on ESP32\n    44→#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n    45→            default:\n    46→                return ADC_LL_CTRL_DIG;\n    47→#else\n    48→            case ADC_HAL_SINGLE_READ_MODE:\n    49→                return ADC_LL_CTRL_RTC;\n    50→            case ADC_HAL_CONTINUOUS_READ_MODE:\n    51→                return ADC_LL_CTRL_DIG;\n    52→            case ADC_HAL_PWDET_MODE:\n    53→                return ADC_LL_CTRL_PWDET;\n    54→            default:\n    55→                abort();\n    56→#endif  //#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n    57→#else\n    58→            default:\n    59→                return ADC_LL_CTRL_ARB;\n    60→#endif\n    61→        }\n    62→    }\n    63→}\n    64→\n    65→void adc_hal_set_controller(adc_unit_t unit, adc_hal_work_mode_t work_mode)\n    66→{\n    67→    adc_ll_controller_t ctrlr = get_controller(unit, work_mode);\n    68→    adc_ll_set_controller(unit, ctrlr);\n    69→}\n    70→\n    71→\n    72→/*---------------------------------------------------------------\n    73→                    Arbiter\n    74→---------------------------------------------------------------*/\n    75→#if SOC_ADC_ARBITER_SUPPORTED\n    76→void adc_hal_arbiter_config(adc_arbiter_t *config)\n    77→{\n    78→    adc_ll_set_arbiter_work_mode(config-\u003emode);\n    79→    adc_ll_set_arbiter_priority(config-\u003ertc_pri, config-\u003edig_pri, config-\u003epwdet_pri);\n    80→}\n    81→#endif  // #if SOC_ADC_ARBITER_SUPPORTED\n    82→\n    83→\n    84→/*---------------------------------------------------------------\n    85→                    ADC calibration setting\n    86→---------------------------------------------------------------*/\n    87→#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n    88→//For chips without RTC controller, Digital controller is used to trigger an ADC single read.\n    89→#include \"esp_rom_sys.h\"\n    90→\n    91→void adc_hal_calibration_init(adc_unit_t adc_n)\n    92→{\n    93→    adc_ll_calibration_init(adc_n);\n    94→}\n    95→\n    96→static uint32_t s_previous_init_code[SOC_ADC_PERIPH_NUM] = {\n    97→    [0 ... (SOC_ADC_PERIPH_NUM - 1)] = -1,\n    98→};\n    99→\n   100→void adc_hal_set_calibration_param(adc_unit_t adc_n, uint32_t param)\n   101→{\n   102→    if (param != s_previous_init_code[adc_n]) {\n   103→        adc_ll_set_calibration_param(adc_n, param);\n   104→        s_previous_init_code[adc_n] = param;\n   105→    }\n   106→}\n   107→\n   108→#if SOC_ADC_SELF_HW_CALI_SUPPORTED\n   109→static void cal_setup(adc_unit_t adc_n, adc_atten_t atten)\n   110→{\n   111→    adc_hal_set_controller(adc_n, ADC_HAL_SINGLE_READ_MODE);\n   112→    adc_oneshot_ll_disable_all_unit();\n   113→    // Enableinternal connect GND (for calibration).\n   114→    adc_oneshot_ll_disable_channel(adc_n);\n   115→    /**\n   116→     * Note:\n   117→     * When controlled by RTC controller, when all channels are disabled, HW auto selects channel0 atten param.\n   118→     * When controlled by DIG controller, unit and channel are not related to attenuation\n   119→     */\n   120→    adc_oneshot_ll_set_atten(adc_n, 0, atten);\n   121→    adc_oneshot_ll_enable(adc_n);\n   122→}\n   123→\n   124→static uint32_t read_cal_channel(adc_unit_t adc_n)\n   125→{\n   126→    uint32_t event = (adc_n == ADC_UNIT_1) ? ADC_LL_EVENT_ADC1_ONESHOT_DONE : ADC_LL_EVENT_ADC2_ONESHOT_DONE;\n   127→    adc_oneshot_ll_clear_event(event);\n   128→\n   129→#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n   130→    adc_oneshot_ll_start(false);\n   131→    esp_rom_delay_us(5);\n   132→    adc_oneshot_ll_start(true);\n   133→#else\n   134→    adc_oneshot_ll_start(adc_n);\n   135→#endif\n   136→\n   137→    while(!adc_oneshot_ll_get_event(event));\n   138→\n   139→    uint32_t read_val = -1;\n   140→    read_val = adc_oneshot_ll_get_raw_result(adc_n);\n   141→    if (adc_oneshot_ll_raw_check_valid(adc_n, read_val) == false) {\n   142→        return -1;\n   143→    }\n   144→    return read_val;\n   145→}\n   146→\n   147→#define ADC_HAL_CAL_TIMES        (10)\n   148→#define ADC_HAL_CAL_OFFSET_RANGE (4096)\n   149→\n   150→uint32_t adc_hal_self_calibration(adc_unit_t adc_n, adc_atten_t atten, bool internal_gnd)\n   151→{\n   152→#if SOC_ADC_ARBITER_SUPPORTED\n   153→    if (adc_n == ADC_UNIT_2) {\n   154→        adc_arbiter_t config = ADC_ARBITER_CONFIG_DEFAULT();\n   155→        adc_hal_arbiter_config(\u0026config);\n   156→    }\n   157→#endif // #if SOC_ADC_ARBITER_SUPPORTED\n   158→\n   159→    cal_setup(adc_n, atten);\n   160→\n   161→    adc_ll_calibration_prepare(adc_n, internal_gnd);\n   162→\n   163→    uint32_t code_list[ADC_HAL_CAL_TIMES] = {0};\n   164→    uint32_t code_sum = 0;\n   165→    uint32_t code_h = 0;\n   166→    uint32_t code_l = 0;\n   167→    uint32_t chk_code = 0;\n   168→\n   169→    for (uint8_t rpt = 0 ; rpt \u003c ADC_HAL_CAL_TIMES ; rpt ++) {\n   170→        code_h = ADC_HAL_CAL_OFFSET_RANGE;\n   171→        code_l = 0;\n   172→        chk_code = (code_h + code_l) / 2;\n   173→        adc_ll_set_calibration_param(adc_n, chk_code);\n   174→        uint32_t self_cal = read_cal_channel(adc_n);\n   175→        while (code_h - code_l \u003e 1) {\n   176→            if (self_cal == 0) {\n   177→                code_h = chk_code;\n   178→            } else {\n   179→                code_l = chk_code;\n   180→            }\n   181→            chk_code = (code_h + code_l) / 2;\n   182→            adc_ll_set_calibration_param(adc_n, chk_code);\n   183→            self_cal = read_cal_channel(adc_n);\n   184→            if ((code_h - code_l == 1)) {\n   185→                chk_code += 1;\n   186→                adc_ll_set_calibration_param(adc_n, chk_code);\n   187→                self_cal = read_cal_channel(adc_n);\n   188→            }\n   189→        }\n   190→        code_list[rpt] = chk_code;\n   191→        code_sum += chk_code;\n   192→    }\n   193→\n   194→    code_l = code_list[0];\n   195→    code_h = code_list[0];\n   196→    for (uint8_t i = 0 ; i \u003c ADC_HAL_CAL_TIMES ; i++) {\n   197→        code_l = MIN(code_l, code_list[i]);\n   198→        code_h = MAX(code_h, code_list[i]);\n   199→    }\n   200→\n   201→    chk_code = code_h + code_l;\n   202→    uint32_t ret = ((code_sum - chk_code) % (ADC_HAL_CAL_TIMES - 2) \u003c 4)\n   203→           ? (code_sum - chk_code) / (ADC_HAL_CAL_TIMES - 2)\n   204→           : (code_sum - chk_code) / (ADC_HAL_CAL_TIMES - 2) + 1;\n   205→\n   206→    adc_ll_calibration_finish(adc_n);\n   207→    return ret;\n   208→}\n   209→#endif  //#if SOC_ADC_SELF_HW_CALI_SUPPORTED\n   210→#endif //SOC_ADC_CALIBRATION_V1_SUPPORTED\n   211→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "6b9ca851-f44a-44ed-9042-78439b229a7c",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01QkkxrAg296JevYSztZmRoA",
+          "content": "     1→/*\n     2→ * SPDX-FileCopyrightText: 2019-2024 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#include \u003czephyr/sys/util.h\u003e\n     8→#include \"sdkconfig.h\"\n     9→#include \"hal/adc_hal.h\"\n    10→#include \"hal/assert.h\"\n    11→#include \"soc/lldesc.h\"\n    12→#include \"soc/soc_caps.h\"\n    13→\n    14→#if CONFIG_IDF_TARGET_ESP32\n    15→//ADC utilises I2S0 DMA on ESP32\n    16→#include \"hal/i2s_hal.h\"\n    17→#include \"hal/i2s_types.h\"\n    18→#include \"soc/i2s_struct.h\"\n    19→#endif\n    20→\n    21→#if CONFIG_IDF_TARGET_ESP32S2\n    22→//ADC utilises SPI3 DMA on ESP32S2\n    23→#include \"hal/spi_ll.h\"\n    24→#include \"soc/spi_struct.h\"\n    25→#endif\n    26→\n    27→/*---------------------------------------------------------------\n    28→            Define all ADC DMA required operations here\n    29→---------------------------------------------------------------*/\n    30→#if SOC_GDMA_SUPPORTED\n    31→#define adc_dma_ll_rx_clear_intr(dev, chan, mask)       gdma_ll_rx_clear_interrupt_status(dev, chan, mask)\n    32→#define adc_dma_ll_rx_enable_intr(dev, chan, mask)      gdma_ll_rx_enable_interrupt(dev, chan, mask, true)\n    33→#define adc_dma_ll_rx_disable_intr(dev, chan, mask)     gdma_ll_rx_enable_interrupt(dev, chan, mask, false)\n    34→#define adc_dma_ll_rx_reset_channel(dev, chan)          gdma_ll_rx_reset_channel(dev, chan)\n    35→#define adc_dma_ll_rx_stop(dev, chan)                   gdma_ll_rx_stop(dev, chan)\n    36→#define adc_dma_ll_rx_start(dev, chan, addr) do { \\\n    37→            gdma_ll_rx_set_desc_addr(dev, chan, (uint32_t)addr); \\\n    38→            gdma_ll_rx_start(dev, chan); \\\n    39→        } while (0)\n    40→#define adc_ll_digi_dma_set_eof_num(dev, num)           adc_ll_digi_dma_set_eof_num(num)\n    41→#define adc_ll_digi_reset(dev)                          adc_ll_digi_reset()\n    42→#define adc_ll_digi_trigger_enable(dev)                 adc_ll_digi_trigger_enable()\n    43→#define adc_ll_digi_trigger_disable(dev)                adc_ll_digi_trigger_disable()\n    44→\n    45→//ADC utilises SPI3 DMA on ESP32S2\n    46→#elif CONFIG_IDF_TARGET_ESP32S2\n    47→#define adc_dma_ll_rx_get_intr(dev, mask)               spi_ll_get_intr(dev, mask)\n    48→#define adc_dma_ll_rx_clear_intr(dev, chan, mask)       spi_ll_clear_intr(dev, mask)\n    49→#define adc_dma_ll_rx_enable_intr(dev, chan, mask)      spi_ll_enable_intr(dev, mask)\n    50→#define adc_dma_ll_rx_disable_intr(dev, chan, mask)     spi_ll_disable_intr(dev, mask)\n    51→#define adc_dma_ll_rx_reset_channel(dev, chan)          spi_dma_ll_rx_reset(dev, chan)\n    52→#define adc_dma_ll_rx_stop(dev, chan)                   spi_dma_ll_rx_stop(dev, chan)\n    53→#define adc_dma_ll_rx_start(dev, chan, addr)            spi_dma_ll_rx_start(dev, chan, addr)\n    54→#define adc_dma_ll_get_in_suc_eof_desc_addr(dev, chan)  spi_dma_ll_get_in_suc_eof_desc_addr(dev, chan)\n    55→#define adc_ll_digi_dma_set_eof_num(dev, num)           adc_ll_digi_dma_set_eof_num(num)\n    56→#define adc_ll_digi_reset(dev)                          adc_ll_digi_reset()\n    57→#define adc_ll_digi_trigger_enable(dev)                 adc_ll_digi_trigger_enable()\n    58→#define adc_ll_digi_trigger_disable(dev)                adc_ll_digi_trigger_disable()\n    59→\n    60→//ADC utilises I2S0 DMA on ESP32\n    61→#else //CONFIG_IDF_TARGET_ESP32\n    62→#define adc_dma_ll_rx_get_intr(dev, mask)               ({i2s_ll_get_intr_status(dev) \u0026 mask;})\n    63→#define adc_dma_ll_rx_clear_intr(dev, chan, mask)       i2s_ll_clear_intr_status(dev, mask)\n    64→#define adc_dma_ll_rx_enable_intr(dev, chan, mask)      do {((i2s_dev_t *)(dev))-\u003eint_ena.val |= mask;} while (0)\n    65→#define adc_dma_ll_rx_disable_intr(dev, chan, mask)     do {((i2s_dev_t *)(dev))-\u003eint_ena.val \u0026= ~mask;} while (0)\n    66→#define adc_dma_ll_rx_reset_channel(dev, chan)          i2s_ll_rx_reset_dma(dev)\n    67→#define adc_dma_ll_rx_stop(dev, chan)                   i2s_ll_rx_stop_link(dev)\n    68→#define adc_dma_ll_rx_start(dev, chan, address) do { \\\n    69→            ((i2s_dev_t *)(dev))-\u003ein_link.addr = (uint32_t)(address); \\\n    70→            i2s_ll_enable_dma(dev, 1); \\\n    71→            ((i2s_dev_t *)(dev))-\u003ein_link.start = 1; \\\n    72→        } while (0)\n    73→#define adc_dma_ll_get_in_suc_eof_desc_addr(dev, chan)  ({uint32_t addr; i2s_ll_rx_get_eof_des_addr(dev, \u0026addr); addr;})\n    74→#define adc_ll_digi_dma_set_eof_num(dev, num)            do {((i2s_dev_t *)(dev))-\u003erx_eof_num = num;} while (0)\n    75→#define adc_ll_digi_reset(dev) do { \\\n    76→            i2s_ll_rx_reset(dev); \\\n    77→            i2s_ll_rx_reset_fifo(dev); \\\n    78→        } while (0)\n    79→#define adc_ll_digi_trigger_enable(dev)                 i2s_ll_rx_start(dev)\n    80→#define adc_ll_digi_trigger_disable(dev)                i2s_ll_rx_stop(dev)\n    81→#define adc_ll_digi_dma_enable()                        adc_ll_digi_set_data_source(1)  //Will this influence I2S0\n    82→#define adc_ll_digi_dma_disable()                       adc_ll_digi_set_data_source(0)\n    83→\n    84→//ESP32 ADC uses the DMA through I2S. The I2S needs to be configured.\n    85→#define I2S_BASE_CLK                                    (160 * 1000 * 1000)\n    86→#define SAMPLE_BITS                                     16\n    87→#define ADC_LL_CLKM_DIV_NUM_DEFAULT                     2\n    88→#define ADC_LL_CLKM_DIV_B_DEFAULT                       0\n    89→#define ADC_LL_CLKM_DIV_A_DEFAULT                       1\n    90→\n    91→#endif\n    92→\n    93→\n    94→\n    95→void adc_hal_dma_ctx_config(adc_hal_dma_ctx_t *hal, const adc_hal_dma_config_t *config)\n    96→{\n    97→    hal-\u003edesc_dummy_head.next = hal-\u003erx_desc;\n    98→    hal-\u003edev = config-\u003edev;\n    99→    hal-\u003eeof_desc_num = config-\u003eeof_desc_num;\n   100→    hal-\u003eeof_step = config-\u003eeof_step;\n   101→    hal-\u003edma_chan = config-\u003edma_chan;\n   102→    hal-\u003eeof_num = config-\u003eeof_num;\n   103→}\n   104→\n   105→void adc_hal_digi_init(adc_hal_dma_ctx_t *hal)\n   106→{\n   107→    // Set internal FSM wait time, fixed value.\n   108→    adc_ll_digi_set_fsm_time(ADC_LL_FSM_RSTB_WAIT_DEFAULT, ADC_LL_FSM_START_WAIT_DEFAULT,\n   109→                             ADC_LL_FSM_STANDBY_WAIT_DEFAULT);\n   110→    adc_ll_set_sample_cycle(ADC_LL_SAMPLE_CYCLE_DEFAULT);\n   111→    adc_hal_pwdet_set_cct(ADC_LL_PWDET_CCT_DEFAULT);\n   112→    adc_ll_digi_output_invert(ADC_UNIT_1, ADC_LL_DIGI_DATA_INVERT_DEFAULT(ADC_UNIT_1));\n   113→    adc_ll_digi_output_invert(ADC_UNIT_2, ADC_LL_DIGI_DATA_INVERT_DEFAULT(ADC_UNIT_2));\n   114→    adc_ll_digi_set_clk_div(ADC_LL_DIGI_SAR_CLK_DIV_DEFAULT);\n   115→\n   116→#if !SOC_GDMA_SUPPORTED\n   117→    adc_dma_ll_rx_clear_intr(hal-\u003edev, hal-\u003edma_chan, ADC_HAL_DMA_INTR_MASK);\n   118→    adc_dma_ll_rx_enable_intr(hal-\u003edev, hal-\u003edma_chan, ADC_HAL_DMA_INTR_MASK);\n   119→#endif /* !SOC_GDMA_SUPPORTED */\n   120→    adc_ll_digi_dma_set_eof_num(hal-\u003edev, hal-\u003eeof_num);\n   121→#if CONFIG_IDF_TARGET_ESP32\n   122→    i2s_ll_rx_set_sample_bit(hal-\u003edev, SAMPLE_BITS, SAMPLE_BITS);\n   123→    i2s_ll_rx_enable_mono_mode(hal-\u003edev, 1);\n   124→    i2s_ll_rx_force_enable_fifo_mod(hal-\u003edev, 1);\n   125→    i2s_ll_enable_builtin_adc(hal-\u003edev, 1);\n   126→#endif\n   127→\n   128→    adc_oneshot_ll_disable_all_unit();\n   129→}\n   130→\n   131→void adc_hal_digi_deinit(adc_hal_dma_ctx_t *hal)\n   132→{\n   133→    adc_ll_digi_trigger_disable(hal-\u003edev);\n   134→    adc_ll_digi_dma_disable();\n   135→    adc_ll_digi_clear_pattern_table(ADC_UNIT_1);\n   136→    adc_ll_digi_clear_pattern_table(ADC_UNIT_2);\n   137→    adc_ll_digi_reset(hal-\u003edev);\n   138→    adc_ll_digi_controller_clk_disable();\n   139→}\n   140→\n   141→/*---------------------------------------------------------------\n   142→                    DMA read\n   143→---------------------------------------------------------------*/\n   144→static adc_ll_digi_convert_mode_t get_convert_mode(adc_digi_convert_mode_t convert_mode)\n   145→{\n   146→#if CONFIG_IDF_TARGET_ESP32 || SOC_ADC_DIGI_CONTROLLER_NUM == 1\n   147→    return ADC_LL_DIGI_CONV_ONLY_ADC1;\n   148→#elif (SOC_ADC_DIGI_CONTROLLER_NUM \u003e= 2)\n   149→    switch (convert_mode) {\n   150→        case ADC_CONV_SINGLE_UNIT_1:\n   151→            return ADC_LL_DIGI_CONV_ONLY_ADC1;\n   152→        case ADC_CONV_SINGLE_UNIT_2:\n   153→            return ADC_LL_DIGI_CONV_ONLY_ADC2;\n   154→        case ADC_CONV_BOTH_UNIT:\n   155→            return ADC_LL_DIGI_CONV_BOTH_UNIT;\n   156→        case ADC_CONV_ALTER_UNIT:\n   157→            return ADC_LL_DIGI_CONV_ALTER_UNIT;\n   158→        default:\n   159→            abort();\n   160→    }\n   161→#endif\n   162→}\n   163→\n   164→/**\n   165→ * For esp32s2 and later chips\n   166→ * - Set ADC digital controller clock division factor. The clock is divided from `APLL` or `APB` clock.\n   167→ *   Expression: controller_clk = APLL/APB * (div_num  + div_a / div_b + 1).\n   168→ * - Enable clock and select clock source for ADC digital controller.\n   169→ * For esp32, use I2S clock\n   170→ */\n   171→static void adc_hal_digi_sample_freq_config(adc_hal_dma_ctx_t *hal, adc_continuous_clk_src_t clk_src, uint32_t clk_src_freq_hz, uint32_t sample_freq_hz)\n   172→{\n   173→#if !CONFIG_IDF_TARGET_ESP32\n   174→    uint32_t interval = clk_src_freq_hz / (ADC_LL_CLKM_DIV_NUM_DEFAULT + ADC_LL_CLKM_DIV_A_DEFAULT / ADC_LL_CLKM_DIV_B_DEFAULT + 1) / 2 / sample_freq_hz;\n   175→    //set sample interval\n   176→    adc_ll_digi_set_trigger_interval(interval);\n   177→    //Here we set the clock divider factor to make the digital clock to 5M Hz\n   178→    adc_ll_digi_controller_clk_div(ADC_LL_CLKM_DIV_NUM_DEFAULT, ADC_LL_CLKM_DIV_B_DEFAULT, ADC_LL_CLKM_DIV_A_DEFAULT);\n   179→    adc_ll_digi_clk_sel(clk_src);\n   180→#else\n   181→    i2s_ll_rx_clk_set_src(hal-\u003edev, I2S_CLK_SRC_DEFAULT);    /*!\u003c Clock from PLL_D2_CLK(160M)*/\n   182→    uint32_t bclk_div = 16;\n   183→    uint32_t bclk = sample_freq_hz * 2;\n   184→    uint32_t mclk = bclk * bclk_div;\n   185→    i2s_ll_mclk_div_t mclk_div = {};\n   186→    i2s_hal_calc_mclk_precise_division(I2S_BASE_CLK, mclk, \u0026mclk_div);\n   187→    i2s_ll_rx_set_mclk(hal-\u003edev, \u0026mclk_div);\n   188→    i2s_ll_rx_set_bck_div_num(hal-\u003edev, bclk_div);\n   189→#endif\n   190→}\n   191→\n   192→void adc_hal_digi_controller_config(adc_hal_dma_ctx_t *hal, const adc_hal_digi_ctrlr_cfg_t *cfg)\n   193→{\n   194→#if (SOC_ADC_DIGI_CONTROLLER_NUM == 1)\n   195→    //Only one pattern table, this variable is for readability\n   196→    const int pattern_both = 0;\n   197→\n   198→    adc_ll_digi_clear_pattern_table(pattern_both);\n   199→    adc_ll_digi_set_pattern_table_len(pattern_both, cfg-\u003eadc_pattern_len);\n   200→    for (int i = 0; i \u003c cfg-\u003eadc_pattern_len; i++) {\n   201→        adc_ll_digi_set_pattern_table(pattern_both, i, cfg-\u003eadc_pattern[i]);\n   202→    }\n   203→\n   204→#elif (SOC_ADC_DIGI_CONTROLLER_NUM \u003e= 2)\n   205→    uint32_t adc1_pattern_idx = 0;\n   206→    uint32_t adc2_pattern_idx = 0;\n   207→\n   208→    adc_ll_digi_clear_pattern_table(ADC_UNIT_1);\n   209→    adc_ll_digi_clear_pattern_table(ADC_UNIT_2);\n   210→\n   211→    for (int i = 0; i \u003c cfg-\u003eadc_pattern_len; i++) {\n   212→        if (cfg-\u003eadc_pattern[i].unit == ADC_UNIT_1) {\n   213→            adc_ll_digi_set_pattern_table(ADC_UNIT_1, adc1_pattern_idx, cfg-\u003eadc_pattern[i]);\n   214→            adc1_pattern_idx++;\n   215→        } else if (cfg-\u003eadc_pattern[i].unit == ADC_UNIT_2) {\n   216→            adc_ll_digi_set_pattern_table(ADC_UNIT_2, adc2_pattern_idx, cfg-\u003eadc_pattern[i]);\n   217→            adc2_pattern_idx++;\n   218→        } else {\n   219→            abort();\n   220→        }\n   221→    }\n   222→    adc_ll_digi_set_pattern_table_len(ADC_UNIT_1, adc1_pattern_idx);\n   223→    adc_ll_digi_set_pattern_table_len(ADC_UNIT_2, adc2_pattern_idx);\n   224→\n   225→#endif\n   226→\n   227→    adc_ll_digi_convert_limit_enable(ADC_LL_DEFAULT_CONV_LIMIT_EN);\n   228→    adc_ll_digi_set_convert_limit_num(ADC_LL_DEFAULT_CONV_LIMIT_NUM);\n   229→    adc_ll_digi_set_convert_mode(get_convert_mode(cfg-\u003econv_mode));\n   230→\n   231→    //clock and sample frequency\n   232→    adc_hal_digi_sample_freq_config(hal, cfg-\u003eclk_src, cfg-\u003eclk_src_freq_hz, cfg-\u003esample_freq_hz);\n   233→}\n   234→\n   235→static void adc_hal_digi_dma_link_descriptors(dma_descriptor_t *desc, uint8_t *data_buf, uint32_t per_eof_size, uint32_t eof_step, uint32_t eof_num)\n   236→{\n   237→    HAL_ASSERT(((uint32_t)data_buf % 4) == 0);\n   238→    HAL_ASSERT((per_eof_size % 4) == 0);\n   239→    uint32_t n = 0;\n   240→    dma_descriptor_t *desc_head = desc;\n   241→\n   242→    while (eof_num--) {\n   243→        uint32_t eof_size = per_eof_size;\n   244→\n   245→        for (int i = 0; i \u003c eof_step; i++) {\n   246→            uint32_t this_len = eof_size;\n   247→            if (this_len \u003e DMA_DESCRIPTOR_BUFFER_MAX_SIZE_4B_ALIGNED) {\n   248→                this_len = DMA_DESCRIPTOR_BUFFER_MAX_SIZE_4B_ALIGNED;\n   249→            }\n   250→\n   251→            desc[n] = (dma_descriptor_t) {\n   252→                .dw0.size = this_len,\n   253→                .dw0.length = 0,\n   254→                .dw0.suc_eof = 0,\n   255→                .dw0.owner = 1,\n   256→                .buffer = data_buf,\n   257→                .next = \u0026desc[n+1]\n   258→            };\n   259→            eof_size -= this_len;\n   260→            data_buf += this_len;\n   261→            n++;\n   262→        }\n   263→    }\n   264→    desc[n-1].next = desc_head;\n   265→}\n   266→\n   267→void adc_hal_digi_start(adc_hal_dma_ctx_t *hal, uint8_t *data_buf)\n   268→{\n   269→    //stop peripheral and DMA\n   270→    adc_hal_digi_stop(hal);\n   271→\n   272→#if !SOC_GDMA_SUPPORTED\n   273→    //reset DMA\n   274→    adc_dma_ll_rx_reset_channel(hal-\u003edev, hal-\u003edma_chan);\n   275→#endif /* !SOC_GDMA_SUPPORTED */\n   276→    //reset peripheral\n   277→    adc_ll_digi_reset(hal-\u003edev);\n   278→\n   279→    //reset the current descriptor address\n   280→    hal-\u003ecur_desc_ptr = \u0026hal-\u003edesc_dummy_head;\n   281→    adc_hal_digi_dma_link_descriptors(hal-\u003erx_desc, data_buf, hal-\u003eeof_num * SOC_ADC_DIGI_DATA_BYTES_PER_CONV, hal-\u003eeof_step, hal-\u003eeof_desc_num);\n   282→\n   283→#if !SOC_GDMA_SUPPORTED\n   284→    //start DMA\n   285→    adc_dma_ll_rx_start(hal-\u003edev, hal-\u003edma_chan, (lldesc_t *)hal-\u003erx_desc);\n   286→#endif /* !SOC_GDMA_SUPPORTED */\n   287→    //connect DMA and peripheral\n   288→    adc_ll_digi_dma_enable();\n   289→    //start ADC\n   290→    adc_ll_digi_trigger_enable(hal-\u003edev);\n   291→}\n   292→\n   293→#if !SOC_GDMA_SUPPORTED\n   294→intptr_t adc_hal_get_desc_addr(adc_hal_dma_ctx_t *hal)\n   295→{\n   296→    return adc_dma_ll_get_in_suc_eof_desc_addr(hal-\u003edev, hal-\u003edma_chan);\n   297→}\n   298→\n   299→bool adc_hal_check_event(adc_hal_dma_ctx_t *hal, uint32_t mask)\n   300→{\n   301→    return adc_dma_ll_rx_get_intr(hal-\u003edev, mask);\n   302→}\n   303→#endif  //#if !SOC_GDMA_SUPPORTED\n   304→\n   305→adc_hal_dma_desc_status_t adc_hal_get_reading_result(adc_hal_dma_ctx_t *hal, const intptr_t eof_desc_addr, uint8_t **buffer, uint32_t *len)\n   306→{\n   307→    HAL_ASSERT(hal-\u003ecur_desc_ptr);\n   308→\n   309→    if (!hal-\u003ecur_desc_ptr-\u003enext) {\n   310→        return ADC_HAL_DMA_DESC_NULL;\n   311→    }\n   312→\n   313→    if ((intptr_t)hal-\u003ecur_desc_ptr == eof_desc_addr) {\n   314→        return ADC_HAL_DMA_DESC_WAITING;\n   315→    }\n   316→\n   317→    uint8_t *buffer_start = NULL;\n   318→    uint32_t eof_len = 0;\n   319→    dma_descriptor_t *eof_desc = hal-\u003ecur_desc_ptr;\n   320→\n   321→    //Find the eof list start\n   322→    eof_desc = eof_desc-\u003enext;\n   323→    eof_desc-\u003edw0.owner = 1;\n   324→    buffer_start = eof_desc-\u003ebuffer;\n   325→    eof_len += eof_desc-\u003edw0.length;\n   326→    if ((intptr_t)eof_desc == eof_desc_addr) {\n   327→        goto valid;\n   328→    }\n   329→\n   330→    //Find the eof list end\n   331→    for (int i = 1; i \u003c hal-\u003eeof_step; i++) {\n   332→        eof_desc = eof_desc-\u003enext;\n   333→        eof_desc-\u003edw0.owner = 1;\n   334→        eof_len += eof_desc-\u003edw0.length;\n   335→        if ((intptr_t)eof_desc == eof_desc_addr) {\n   336→            goto valid;\n   337→        }\n   338→    }\n   339→\n   340→valid:\n   341→    hal-\u003ecur_desc_ptr = eof_desc;\n   342→    *buffer = buffer_start;\n   343→    *len = eof_len;\n   344→\n   345→    return ADC_HAL_DMA_DESC_VALID;\n   346→}\n   347→\n   348→void adc_hal_digi_clr_intr(adc_hal_dma_ctx_t *hal, uint32_t mask)\n   349→{\n   350→#if !SOC_GDMA_SUPPORTED\n   351→    adc_dma_ll_rx_clear_intr(hal-\u003edev, hal-\u003edma_chan, mask);\n   352→#endif /* !SOC_GDMA_SUPPORTED */\n   353→}\n   354→\n   355→void adc_hal_digi_dis_intr(adc_hal_dma_ctx_t *hal, uint32_t mask)\n   356→{\n   357→#if !SOC_GDMA_SUPPORTED\n   358→    adc_dma_ll_rx_disable_intr(hal-\u003edev, hal-\u003edma_chan, mask);\n   359→#endif /* !SOC_GDMA_SUPPORTED */\n   360→}\n   361→\n   362→void adc_hal_digi_stop(adc_hal_dma_ctx_t *hal)\n   363→{\n   364→    //stop ADC\n   365→    adc_ll_digi_trigger_disable(hal-\u003edev);\n   366→#if !SOC_GDMA_SUPPORTED\n   367→    //stop DMA\n   368→    adc_dma_ll_rx_stop(hal-\u003edev, hal-\u003edma_chan);\n   369→#endif /* !SOC_GDMA_SUPPORTED */\n   370→    //disconnect DMA and peripheral\n   371→    adc_ll_digi_dma_disable();\n   372→}\n   373→\n   374→#if ADC_LL_WORKAROUND_CLEAR_EOF_COUNTER\n   375→void adc_hal_digi_clr_eof(void)\n   376→{\n   377→    adc_ll_digi_dma_clr_eof();\n   378→}\n   379→#endif\n   380→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "77e664a9-3d10-42ac-9053-78975bde84d8",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01WrsCroz3janxASxSeVSVMA",
+          "content": "     1→/*\n     2→ * SPDX-FileCopyrightText: 2021-2024 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#pragma once\n     8→\n     9→#include \"esp_err.h\"\n    10→#include \"soc/soc_caps.h\"\n    11→#include \"hal/dma_types.h\"\n    12→#include \"hal/adc_types.h\"\n    13→#include \"hal/adc_ll.h\"\n    14→#include \"hal/adc_hal_common.h\"\n    15→#include \"esp_err.h\"\n    16→\n    17→#if SOC_GDMA_SUPPORTED\n    18→#include \"soc/gdma_struct.h\"\n    19→#include \"hal/gdma_ll.h\"\n    20→#endif\n    21→\n    22→#if CONFIG_IDF_TARGET_ESP32S2\n    23→//ADC utilises SPI3 DMA on ESP32S2\n    24→#include \"hal/spi_ll.h\"\n    25→#endif\n    26→\n    27→#if CONFIG_IDF_TARGET_ESP32\n    28→//ADC utilises I2S0 DMA on ESP32\n    29→#include \"hal/i2s_ll.h\"\n    30→#endif\n    31→\n    32→#ifdef __cplusplus\n    33→extern \"C\" {\n    34→#endif\n    35→\n    36→#if SOC_GDMA_SUPPORTED\n    37→#define ADC_HAL_DMA_INTR_MASK                           GDMA_LL_EVENT_RX_SUC_EOF\n    38→#elif CONFIG_IDF_TARGET_ESP32S2\n    39→#define ADC_HAL_DMA_INTR_MASK                           SPI_LL_INTR_IN_SUC_EOF\n    40→#else //CONFIG_IDF_TARGET_ESP32\n    41→#define ADC_HAL_DMA_INTR_MASK                           BIT(9)\n    42→#endif\n    43→\n    44→/**\n    45→ * @brief Enum for DMA descriptor status\n    46→ */\n    47→typedef enum adc_hal_dma_desc_status_t {\n    48→    ADC_HAL_DMA_DESC_VALID   = 0,            ///\u003c This DMA descriptor is written by HW already\n    49→    ADC_HAL_DMA_DESC_WAITING = 1,            ///\u003c This DMA descriptor is not written by HW yet\n    50→    ADC_HAL_DMA_DESC_NULL    = 2             ///\u003c This DMA descriptor is NULL\n    51→} adc_hal_dma_desc_status_t;\n    52→\n    53→/**\n    54→ * @brief Configuration of the HAL\n    55→ */\n    56→typedef struct adc_hal_dma_config_t {\n    57→    void                *dev;               ///\u003c DMA peripheral address\n    58→    uint32_t            eof_desc_num;       ///\u003c Number of dma descriptors that is eof\n    59→    uint32_t            eof_step;           ///\u003c Number of linked descriptors that is one eof\n    60→    uint32_t            dma_chan;           ///\u003c DMA channel to be used\n    61→    uint32_t            eof_num;            ///\u003c Bytes between 2 in_suc_eof interrupts\n    62→} adc_hal_dma_config_t;\n    63→\n    64→/**\n    65→ * @brief Context of the HAL\n    66→ */\n    67→typedef struct adc_hal_dma_ctx_t {\n    68→    /**\u003c this needs to be malloced by the driver layer first */\n    69→    dma_descriptor_t    *rx_desc;           ///\u003c DMA descriptors\n    70→\n    71→    /**\u003c these will be assigned by hal layer itself */\n    72→    dma_descriptor_t    desc_dummy_head;    ///\u003c Dummy DMA descriptor for ``cur_desc_ptr`` to start\n    73→    dma_descriptor_t    *cur_desc_ptr;      ///\u003c Pointer to the current descriptor\n    74→\n    75→    /**\u003c these need to be configured by `adc_hal_dma_config_t` via driver layer*/\n    76→    void                *dev;               ///\u003c DMA address\n    77→    uint32_t            eof_desc_num;       ///\u003c Number of dma descriptors that is eof\n    78→    uint32_t            eof_step;           ///\u003c Number of linked descriptors that is one eof\n    79→    uint32_t            dma_chan;           ///\u003c DMA channel to be used\n    80→    uint32_t            eof_num;            ///\u003c Words between 2 in_suc_eof interrupts\n    81→} adc_hal_dma_ctx_t;\n    82→\n    83→typedef struct adc_hal_digi_ctrlr_cfg_t {\n    84→    uint32_t                    adc_pattern_len;    //total pattern item number, including ADC1 and ADC2\n    85→    adc_digi_pattern_config_t   *adc_pattern;       //pattern item\n    86→    uint32_t                    sample_freq_hz;     //ADC sample frequency\n    87→    adc_digi_convert_mode_t     conv_mode;          //controller work mode\n    88→    uint32_t                    bit_width;          //output data width\n    89→    adc_continuous_clk_src_t    clk_src;            ///\u003c Clock source\n    90→    uint32_t                    clk_src_freq_hz;    ///\u003c Clock source frequency in hz\n    91→} adc_hal_digi_ctrlr_cfg_t;\n    92→\n    93→\n    94→/*---------------------------------------------------------------\n    95→                    PWDET(Power detect) controller setting\n    96→---------------------------------------------------------------*/\n    97→/**\n    98→ * Set adc cct for PWDET controller.\n    99→ *\n   100→ * @note Capacitor tuning of the PA power monitor. cct set to the same value with PHY.\n   101→ * @prarm cct Range: 0 ~ 7.\n   102→ */\n   103→#define adc_hal_pwdet_set_cct(cct) adc_ll_pwdet_set_cct(cct)\n   104→\n   105→/**\n   106→ * Get adc cct for PWDET controller.\n   107→ *\n   108→ * @note Capacitor tuning of the PA power monitor. cct set to the same value with PHY.\n   109→ * @return cct Range: 0 ~ 7.\n   110→ */\n   111→#define adc_hal_pwdet_get_cct() adc_ll_pwdet_get_cct()\n   112→\n   113→/*---------------------------------------------------------------\n   114→                    Digital controller setting\n   115→---------------------------------------------------------------*/\n   116→/**\n   117→ * @brief Initialize the HW\n   118→ *\n   119→ * @param hal Context of the HAL\n   120→ */\n   121→void adc_hal_digi_init(adc_hal_dma_ctx_t *hal);\n   122→\n   123→/**\n   124→ * Digital controller deinitialization.\n   125→ *\n   126→ * @param hal Context of the HAL\n   127→ */\n   128→void adc_hal_digi_deinit(adc_hal_dma_ctx_t *hal);\n   129→\n   130→/**\n   131→ * @brief Initialize the hal context\n   132→ *\n   133→ * @param hal    Context of the HAL\n   134→ * @param config Configuration of the HAL\n   135→ */\n   136→void adc_hal_dma_ctx_config(adc_hal_dma_ctx_t *hal, const adc_hal_dma_config_t *config);\n   137→\n   138→/**\n   139→ * Setting the digital controller.\n   140→ *\n   141→ * @param hal    Context of the HAL\n   142→ * @param cfg    Pointer to digital controller paramter.\n   143→ */\n   144→void adc_hal_digi_controller_config(adc_hal_dma_ctx_t *hal, const adc_hal_digi_ctrlr_cfg_t *cfg);\n   145→\n   146→/**\n   147→ * @brief Start Conversion\n   148→ *\n   149→ * @param hal Context of the HAL\n   150→ * @param data_buf Pointer to the data buffer, the length should be multiple of ``desc_max_num`` and ``eof_num`` in ``adc_hal_dma_ctx_t``\n   151→ */\n   152→void adc_hal_digi_start(adc_hal_dma_ctx_t *hal, uint8_t *data_buf);\n   153→\n   154→#if !SOC_GDMA_SUPPORTED\n   155→/**\n   156→ * @brief Get the DMA descriptor that Hardware has finished processing.\n   157→ *\n   158→ * @param hal Context of the HAL\n   159→ *\n   160→ * @return DMA descriptor address\n   161→ */\n   162→intptr_t adc_hal_get_desc_addr(adc_hal_dma_ctx_t *hal);\n   163→\n   164→/**\n   165→ * @brief Check the hardware interrupt event\n   166→ *\n   167→ * @param hal Context of the HAL\n   168→ * @param mask Event mask\n   169→ *\n   170→ * @return True: the event is triggered. False: the event is not triggered yet.\n   171→ */\n   172→bool adc_hal_check_event(adc_hal_dma_ctx_t *hal, uint32_t mask);\n   173→#endif\n   174→\n   175→/**\n   176→ * @brief Get the ADC reading result\n   177→ *\n   178→ * @param      hal           Context of the HAL\n   179→ * @param      eof_desc_addr The last descriptor that is finished by HW. Should be got from DMA\n   180→ * @param[out] buffer        ADC reading result buffer\n   181→ * @param[out] len           ADC reading result len\n   182→ *\n   183→ * @return                   See ``adc_hal_dma_desc_status_t``\n   184→ */\n   185→adc_hal_dma_desc_status_t adc_hal_get_reading_result(adc_hal_dma_ctx_t *hal, const intptr_t eof_desc_addr, uint8_t **buffer, uint32_t *len);\n   186→\n   187→/**\n   188→ * @brief Clear interrupt\n   189→ *\n   190→ * @param hal  Context of the HAL\n   191→ * @param mask mask of the interrupt\n   192→ */\n   193→void adc_hal_digi_clr_intr(adc_hal_dma_ctx_t *hal, uint32_t mask);\n   194→\n   195→/**\n   196→ * @brief Enable interrupt\n   197→ *\n   198→ * @param hal  Context of the HAL\n   199→ * @param mask mask of the interrupt\n   200→ */\n   201→void adc_hal_digi_dis_intr(adc_hal_dma_ctx_t *hal, uint32_t mask);\n   202→\n   203→/**\n   204→ * @brief Stop conversion\n   205→ *\n   206→ * @param hal Context of the HAL\n   207→ */\n   208→void adc_hal_digi_stop(adc_hal_dma_ctx_t *hal);\n   209→\n   210→#if ADC_LL_WORKAROUND_CLEAR_EOF_COUNTER\n   211→/**\n   212→ * @brief Clear the ADC sample counter\n   213→ */\n   214→void adc_hal_digi_clr_eof(void);\n   215→#endif\n   216→\n   217→#ifdef __cplusplus\n   218→}\n   219→#endif\n   220→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "abb0cf26-729c-4058-9da8-a90afd0945aa",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01AyWmJAYjSGUeBVRf3qi1oq",
+          "content": "     1→/*\n     2→ * SPDX-FileCopyrightText: 2021-2022 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#pragma once\n     8→\n     9→#include \"hal/adc_types.h\"\n    10→#include \"hal/adc_types_private.h\"\n    11→\n    12→#ifdef __cplusplus\n    13→extern \"C\" {\n    14→#endif\n    15→\n    16→\n    17→/**\n    18→ * This header file is only for hardware abstract concepts and APIs\n    19→ * used by both ADC RTC controller and Digital controller\n    20→ */\n    21→\n    22→/**\n    23→ * ADC work mode\n    24→ */\n    25→typedef enum adc_hal_work_mode_t {\n    26→    ADC_HAL_SINGLE_READ_MODE,\n    27→    ADC_HAL_CONTINUOUS_READ_MODE,\n    28→    ADC_HAL_PWDET_MODE,\n    29→    ADC_HAL_ULP_FSM_MODE,\n    30→} adc_hal_work_mode_t;\n    31→\n    32→/**\n    33→ * Set ADC work mode\n    34→ *\n    35→ * @param unit       ADC unit\n    36→ * @param work_mode  see `adc_hal_work_mode_t`\n    37→ */\n    38→void adc_hal_set_controller(adc_unit_t unit, adc_hal_work_mode_t work_mode);\n    39→\n    40→#if SOC_ADC_ARBITER_SUPPORTED\n    41→//No ADC2 controller arbiter on ESP32\n    42→/**\n    43→ * Config ADC2 module arbiter.\n    44→ * The arbiter is to improve the use efficiency of ADC2. After the control right is robbed by the high priority,\n    45→ * the low priority controller will read the invalid ADC2 data, and the validity of the data can be judged by the flag bit in the data.\n    46→ *\n    47→ * @note Only ADC2 support arbiter.\n    48→ * @note The arbiter's working clock is APB_CLK. When the APB_CLK clock drops below 8 MHz, the arbiter must be in shield mode.\n    49→ * @note Default priority: Wi-Fi \u003e RTC \u003e Digital;\n    50→ *\n    51→ * @param config Refer to ``adc_arbiter_t``.\n    52→ */\n    53→void adc_hal_arbiter_config(adc_arbiter_t *config);\n    54→#endif  //#if SOC_ADC_ARBITER_SUPPORTED\n    55→\n    56→/*---------------------------------------------------------------\n    57→                    ADC calibration setting\n    58→---------------------------------------------------------------*/\n    59→#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n    60→\n    61→/**\n    62→ * @brief Initialize default parameter for the calibration block.\n    63→ *\n    64→ * @param adc_n ADC index numer\n    65→ */\n    66→void adc_hal_calibration_init(adc_unit_t adc_n);\n    67→\n    68→/**\n    69→ * Set the calibration result (initial data) to ADC.\n    70→ *\n    71→ * @note  Different ADC units and different attenuation options use different calibration data (initial data).\n    72→ *\n    73→ * @param adc_n ADC index number.\n    74→ * @param param the calibration parameter to configure\n    75→ */\n    76→void adc_hal_set_calibration_param(adc_unit_t adc_n, uint32_t param);\n    77→\n    78→/**\n    79→ * Calibrate the ADC using internal connections.\n    80→ *\n    81→ * @note  Different ADC units and different attenuation options use different calibration data (initial data).\n    82→ *\n    83→ * @param adc_n ADC index number.\n    84→ * @param atten ADC attenuation\n    85→ * @param internal_gnd true:  Disconnect from the IO port and use the internal GND as the calibration voltage.\n    86→ *                     false: Use IO external voltage as calibration voltage.\n    87→ *\n    88→ * @return\n    89→ *      - The calibration result (initial data) to ADC, use `adc_hal_set_calibration_param` to set.\n    90→ */\n    91→uint32_t adc_hal_self_calibration(adc_unit_t adc_n, adc_atten_t atten, bool internal_gnd);\n    92→\n    93→#endif //SOC_ADC_CALIBRATION_V1_SUPPORTED\n    94→\n    95→\n    96→#ifdef __cplusplus\n    97→}\n    98→#endif\n    99→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "953f98af-7eee-4cab-94b6-17afbe034fb1",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01QymMzuNXfLSBhwHA74MNmr",
+          "content": "     1→/*\n     2→ * Copyright (c) 2025 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#define DT_DRV_COMPAT espressif_esp32_adc\n     8→\n     9→#include \u003cesp_clk_tree.h\u003e\n    10→#include \u003cesp_private/sar_periph_ctrl.h\u003e\n    11→#include \u003cesp_private/adc_share_hw_ctrl.h\u003e\n    12→\n    13→#include \"adc_esp32.h\"\n    14→\n    15→#include \u003czephyr/drivers/gpio.h\u003e\n    16→\n    17→#include \u003czephyr/logging/log.h\u003e\n    18→LOG_MODULE_REGISTER(adc_esp32, CONFIG_ADC_LOG_LEVEL);\n    19→\n    20→#define ADC_RESOLUTION_MIN SOC_ADC_DIGI_MIN_BITWIDTH\n    21→#define ADC_RESOLUTION_MAX SOC_ADC_DIGI_MAX_BITWIDTH\n    22→\n    23→#define VALID_RESOLUTION(r) ((r) \u003e= ADC_RESOLUTION_MIN \u0026\u0026 (r) \u003c= ADC_RESOLUTION_MAX)\n    24→\n    25→/* Default internal reference voltage */\n    26→#define ADC_ESP32_DEFAULT_VREF_INTERNAL (1100)\n    27→\n    28→#define ADC_CLIP_MVOLT_12DB\t2550\n    29→\n    30→static void adc_hw_calibration(adc_unit_t unit)\n    31→{\n    32→#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n    33→\tadc_hal_calibration_init(unit);\n    34→\tfor (int j = 0; j \u003c SOC_ADC_ATTEN_NUM; j++) {\n    35→\t\tadc_calc_hw_calibration_code(unit, j);\n    36→#if SOC_ADC_CALIB_CHAN_COMPENS_SUPPORTED\n    37→\t\t/* Load the channel compensation from efuse */\n    38→\t\tfor (int k = 0; k \u003c SOC_ADC_CHANNEL_NUM(unit); k++) {\n    39→\t\t\tadc_load_hw_calibration_chan_compens(unit, k, j);\n    40→\t\t}\n    41→#endif /* SOC_ADC_CALIB_CHAN_COMPENS_SUPPORTED */\n    42→\t}\n    43→#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\n    44→}\n    45→\n    46→/* Convert zephyr,gain property to the ESP32 attenuation */\n    47→static inline int gain_to_atten(enum adc_gain gain, adc_atten_t *atten)\n    48→{\n    49→\tswitch (gain) {\n    50→\tcase ADC_GAIN_1:\n    51→\t\t*atten = ADC_ATTEN_DB_0;\n    52→\t\tbreak;\n    53→\tcase ADC_GAIN_4_5:\n    54→\t\t*atten = ADC_ATTEN_DB_2_5;\n    55→\t\tbreak;\n    56→\tcase ADC_GAIN_1_2:\n    57→\t\t*atten = ADC_ATTEN_DB_6;\n    58→\t\tbreak;\n    59→\tcase ADC_GAIN_1_4:\n    60→\t\t*atten = ADC_ATTEN_DB_12;\n    61→\t\tbreak;\n    62→\tdefault:\n    63→\t\treturn -ENOTSUP;\n    64→\t}\n    65→\treturn 0;\n    66→}\n    67→\n    68→#ifndef CONFIG_ADC_ESP32_DMA\n    69→\n    70→/* Convert voltage by inverted attenuation to support zephyr gain values */\n    71→static void atten_to_gain(adc_atten_t atten, uint32_t *val_mv)\n    72→{\n    73→\tuint32_t num, den;\n    74→\n    75→\tif (!val_mv) {\n    76→\t\treturn;\n    77→\t}\n    78→\n    79→\tswitch (atten) {\n    80→\tcase ADC_ATTEN_DB_2_5: /* 1/ADC_GAIN_4_5 */\n    81→\t\tnum = 4;\n    82→\t\tden = 5;\n    83→\t\tbreak;\n    84→\tcase ADC_ATTEN_DB_6: /* 1/ADC_GAIN_1_2 */\n    85→\t\tnum = 1;\n    86→\t\tden = 2;\n    87→\t\tbreak;\n    88→\tcase ADC_ATTEN_DB_12: /* 1/ADC_GAIN_1_4 */\n    89→\t\tnum = 1;\n    90→\t\tden = 4;\n    91→\t\tbreak;\n    92→\tcase ADC_ATTEN_DB_0: /* 1/ADC_GAIN_1 */\n    93→\tdefault:\n    94→\t\tnum = 1;\n    95→\t\tden = 1;\n    96→\t\tbreak;\n    97→\t}\n    98→\n    99→\t*val_mv = (*val_mv * num) / den;\n   100→}\n   101→\n   102→#endif /* CONFIG_ADC_ESP32_DMA */\n   103→\n   104→static int adc_esp32_read(const struct device *dev, const struct adc_sequence *seq)\n   105→{\n   106→\tstruct adc_esp32_data *data = dev-\u003edata;\n   107→\n   108→\tuint8_t channel_id = find_lsb_set(seq-\u003echannels) - 1;\n   109→\n   110→\tif (seq-\u003ebuffer_size \u003c 2) {\n   111→\t\tLOG_ERR(\"Sequence buffer space too low '%d'\", seq-\u003ebuffer_size);\n   112→\t\treturn -ENOMEM;\n   113→\t}\n   114→\n   115→#ifndef CONFIG_ADC_ESP32_DMA\n   116→\tif (seq-\u003echannels \u003e BIT(channel_id)) {\n   117→\t\tLOG_ERR(\"Multi-channel readings not supported\");\n   118→\t\treturn -ENOTSUP;\n   119→\t}\n   120→\n   121→\tif (seq-\u003eoptions \u0026\u0026 seq-\u003eoptions-\u003eextra_samplings) {\n   122→\t\tLOG_ERR(\"Extra samplings not supported\");\n   123→\t\treturn -ENOTSUP;\n   124→\t}\n   125→\n   126→\tif (seq-\u003eoptions \u0026\u0026 seq-\u003eoptions-\u003einterval_us) {\n   127→\t\tLOG_ERR(\"Interval between samplings not supported\");\n   128→\t\treturn -ENOTSUP;\n   129→\t}\n   130→#endif /* CONFIG_ADC_ESP32_DMA */\n   131→\n   132→\tif (!VALID_RESOLUTION(seq-\u003eresolution)) {\n   133→\t\tLOG_ERR(\"unsupported resolution (%d)\", seq-\u003eresolution);\n   134→\t\treturn -ENOTSUP;\n   135→\t}\n   136→\n   137→\tif (seq-\u003ecalibrate) {\n   138→\t\t/* TODO: Does this mean actual Vref measurement on selected GPIO ?*/\n   139→\t\tLOG_ERR(\"calibration is not supported\");\n   140→\t\treturn -ENOTSUP;\n   141→\t}\n   142→\n   143→\tdata-\u003eresolution[channel_id] = seq-\u003eresolution;\n   144→\n   145→#ifdef CONFIG_ADC_ESP32_DMA\n   146→\tint err = adc_esp32_dma_read(dev, seq);\n   147→\n   148→\tif (err \u003c 0) {\n   149→\t\treturn err;\n   150→\t}\n   151→#else\n   152→\tuint32_t acq_raw;\n   153→\n   154→\tif (seq-\u003echannels \u003e BIT(channel_id)) {\n   155→\t\tLOG_ERR(\"Multi-channel readings not supported\");\n   156→\t\treturn -ENOTSUP;\n   157→\t}\n   158→\n   159→\tif (seq-\u003eoptions \u0026\u0026 seq-\u003eoptions-\u003eextra_samplings) {\n   160→\t\tLOG_ERR(\"Extra samplings not supported\");\n   161→\t\treturn -ENOTSUP;\n   162→\t}\n   163→\n   164→\tif (seq-\u003eoptions \u0026\u0026 seq-\u003eoptions-\u003einterval_us) {\n   165→\t\tLOG_ERR(\"Interval between samplings not supported\");\n   166→\t\treturn -ENOTSUP;\n   167→\t}\n   168→\n   169→\tadc_oneshot_hal_setup(\u0026data-\u003ehal, channel_id);\n   170→\n   171→#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n   172→\tadc_set_hw_calibration_code(data-\u003ehal.unit, data-\u003eattenuation[channel_id]);\n   173→#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\n   174→\n   175→\tadc_oneshot_hal_convert(\u0026data-\u003ehal, \u0026acq_raw);\n   176→\n   177→\tif (data-\u003ecal_handle[channel_id]) {\n   178→\t\tif (data-\u003emeas_ref_internal \u003e 0) {\n   179→\t\t\tuint32_t acq_mv;\n   180→\n   181→\t\t\tadc_cali_raw_to_voltage(data-\u003ecal_handle[channel_id], acq_raw, \u0026acq_mv);\n   182→\n   183→\t\t\tLOG_DBG(\"ADC acquisition [unit: %u, chan: %u, acq_raw: %u, acq_mv: %u]\",\n   184→\t\t\t\tdata-\u003ehal.unit, channel_id, acq_raw, acq_mv);\n   185→\n   186→#if CONFIG_SOC_SERIES_ESP32\n   187→\t\t\tif (data-\u003eattenuation[channel_id] == ADC_ATTEN_DB_12 \u0026\u0026\n   188→\t\t\t    acq_mv \u003e ADC_CLIP_MVOLT_12DB) {\n   189→\t\t\t\tacq_mv = ADC_CLIP_MVOLT_12DB;\n   190→\t\t\t}\n   191→#endif /* CONFIG_SOC_SERIES_ESP32 */\n   192→\n   193→\t\t\t/* Fit according to selected attenuation */\n   194→\t\t\tatten_to_gain(data-\u003eattenuation[channel_id], \u0026acq_mv);\n   195→\t\t\tacq_raw = acq_mv * ((1 \u003c\u003c data-\u003eresolution[channel_id]) - 1) /\n   196→\t\t\t\t  data-\u003emeas_ref_internal;\n   197→\t\t} else {\n   198→\t\t\tLOG_WRN(\"ADC reading is uncompensated\");\n   199→\t\t}\n   200→\t} else {\n   201→\t\tLOG_WRN(\"ADC reading is uncompensated\");\n   202→\t}\n   203→\n   204→\t/* Store result */\n   205→\tdata-\u003ebuffer = (uint16_t *)seq-\u003ebuffer;\n   206→\tdata-\u003ebuffer[0] = acq_raw;\n   207→#endif /* CONFIG_ADC_ESP32_DMA */\n   208→\n   209→\treturn 0;\n   210→}\n   211→\n   212→#ifdef CONFIG_ADC_ASYNC\n   213→static int adc_esp32_read_async(const struct device *dev, const struct adc_sequence *sequence,\n   214→\t\t\t\tstruct k_poll_signal *async)\n   215→{\n   216→\t(void)(dev);\n   217→\t(void)(sequence);\n   218→\t(void)(async);\n   219→\n   220→\treturn -ENOTSUP;\n   221→}\n   222→#endif /* CONFIG_ADC_ASYNC */\n   223→\n   224→static int adc_esp32_channel_setup(const struct device *dev, const struct adc_channel_cfg *cfg)\n   225→{\n   226→\tconst struct adc_esp32_conf *conf = (const struct adc_esp32_conf *)dev-\u003econfig;\n   227→\tstruct adc_esp32_data *data = (struct adc_esp32_data *)dev-\u003edata;\n   228→\tint err;\n   229→\n   230→\tif (cfg-\u003echannel_id \u003e= conf-\u003echannel_count) {\n   231→\t\tLOG_ERR(\"Unsupported channel id '%d'\", cfg-\u003echannel_id);\n   232→\t\treturn -ENOTSUP;\n   233→\t}\n   234→\n   235→\tif (cfg-\u003ereference != ADC_REF_INTERNAL) {\n   236→\t\tLOG_ERR(\"Unsupported channel reference '%d'\", cfg-\u003ereference);\n   237→\t\treturn -ENOTSUP;\n   238→\t}\n   239→\n   240→\tif (cfg-\u003eacquisition_time != ADC_ACQ_TIME_DEFAULT) {\n   241→\t\tLOG_ERR(\"Unsupported acquisition_time '%d'\", cfg-\u003eacquisition_time);\n   242→\t\treturn -ENOTSUP;\n   243→\t}\n   244→\n   245→\tif (cfg-\u003edifferential) {\n   246→\t\tLOG_ERR(\"Differential channels are not supported\");\n   247→\t\treturn -ENOTSUP;\n   248→\t}\n   249→\n   250→\tif (gain_to_atten(cfg-\u003egain, \u0026data-\u003eattenuation[cfg-\u003echannel_id])) {\n   251→\t\tLOG_ERR(\"Unsupported gain value '%d'\", cfg-\u003egain);\n   252→\t\treturn -ENOTSUP;\n   253→\t}\n   254→\n   255→#ifdef CONFIG_ADC_ESP32_DMA\n   256→\terr = adc_esp32_dma_channel_setup(dev, cfg);\n   257→\n   258→\tif (err \u003c 0) {\n   259→\t\treturn err;\n   260→\t}\n   261→#else\n   262→\tadc_atten_t old_atten = data-\u003eattenuation[cfg-\u003echannel_id];\n   263→\n   264→\tadc_oneshot_hal_chan_cfg_t config = {\n   265→\t\t.atten = data-\u003eattenuation[cfg-\u003echannel_id],\n   266→\t\t.bitwidth = data-\u003eresolution[cfg-\u003echannel_id],\n   267→\t};\n   268→\n   269→\tadc_oneshot_hal_channel_config(\u0026data-\u003ehal, \u0026config, cfg-\u003echannel_id);\n   270→\n   271→\tif ((data-\u003ecal_handle[cfg-\u003echannel_id] == NULL) ||\n   272→\t    (data-\u003eattenuation[cfg-\u003echannel_id] != old_atten)) {\n   273→#if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED\n   274→\t\tadc_cali_curve_fitting_config_t cal_config = {\n   275→\t\t\t.unit_id = conf-\u003eunit,\n   276→\t\t\t.chan = cfg-\u003echannel_id,\n   277→\t\t\t.atten = data-\u003eattenuation[cfg-\u003echannel_id],\n   278→\t\t\t.bitwidth = data-\u003eresolution[cfg-\u003echannel_id],\n   279→\t\t};\n   280→\n   281→\t\tLOG_DBG(\"Curve fitting calib [unit_id: %u, chan: %u, atten: %u, bitwidth: %u]\",\n   282→\t\t\tconf-\u003eunit, cfg-\u003echannel_id, data-\u003eattenuation[cfg-\u003echannel_id],\n   283→\t\t\tdata-\u003eresolution[cfg-\u003echannel_id]);\n   284→\n   285→\t\tif (data-\u003ecal_handle[cfg-\u003echannel_id] != NULL) {\n   286→\t\t\t/* delete pre-existing calib scheme */\n   287→\t\t\tadc_cali_delete_scheme_curve_fitting(data-\u003ecal_handle[cfg-\u003echannel_id]);\n   288→\t\t}\n   289→\n   290→\t\tadc_cali_create_scheme_curve_fitting(\u0026cal_config,\n   291→\t\t\t\t\t\t     \u0026data-\u003ecal_handle[cfg-\u003echannel_id]);\n   292→#endif /* ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED */\n   293→\n   294→#if ADC_CALI_SCHEME_LINE_FITTING_SUPPORTED\n   295→\t\tadc_cali_line_fitting_config_t cal_config = {\n   296→\t\t\t.unit_id = conf-\u003eunit,\n   297→\t\t\t.atten = data-\u003eattenuation[cfg-\u003echannel_id],\n   298→\t\t\t.bitwidth = data-\u003eresolution[cfg-\u003echannel_id],\n   299→#if CONFIG_SOC_SERIES_ESP32\n   300→\t\t\t.default_vref = data-\u003emeas_ref_internal\n   301→#endif\n   302→\t\t};\n   303→\n   304→\t\tLOG_DBG(\"Line fitting calib [unit_id: %u, chan: %u, atten: %u, bitwidth: %u]\",\n   305→\t\t\tconf-\u003eunit, cfg-\u003echannel_id, data-\u003eattenuation[cfg-\u003echannel_id],\n   306→\t\t\tdata-\u003eresolution[cfg-\u003echannel_id]);\n   307→\n   308→\t\tif (data-\u003ecal_handle[cfg-\u003echannel_id] != NULL) {\n   309→\t\t\t/* delete pre-existing calib scheme */\n   310→\t\t\tadc_cali_delete_scheme_line_fitting(data-\u003ecal_handle[cfg-\u003echannel_id]);\n   311→\t\t}\n   312→\n   313→\t\tadc_cali_create_scheme_line_fitting(\u0026cal_config,\n   314→\t\t\t\t\t\t    \u0026data-\u003ecal_handle[cfg-\u003echannel_id]);\n   315→#endif /* ADC_CALI_SCHEME_LINE_FITTING_SUPPORTED */\n   316→\t}\n   317→#endif /* CONFIG_ADC_ESP32_DMA */\n   318→\n   319→\t/* GPIO config for ADC mode */\n   320→\n   321→\tint io_num = adc_channel_io_map[conf-\u003eunit][cfg-\u003echannel_id];\n   322→\n   323→\tif (io_num \u003c 0) {\n   324→\t\tLOG_ERR(\"Channel %u not supported!\", cfg-\u003echannel_id);\n   325→\t\treturn -ENOTSUP;\n   326→\t}\n   327→\n   328→\tstruct gpio_dt_spec gpio = {\n   329→\t\t.port = conf-\u003egpio_port,\n   330→\t\t.dt_flags = 0,\n   331→\t\t.pin = io_num,\n   332→\t};\n   333→\n   334→\terr = gpio_pin_configure_dt(\u0026gpio, GPIO_DISCONNECTED);\n   335→\n   336→\tif (err) {\n   337→\t\tLOG_ERR(\"Error disconnecting io (%d)\", io_num);\n   338→\t\treturn err;\n   339→\t}\n   340→\n   341→\treturn 0;\n   342→}\n   343→\n   344→static int adc_esp32_init(const struct device *dev)\n   345→{\n   346→\tstruct adc_esp32_data *data = (struct adc_esp32_data *)dev-\u003edata;\n   347→\tconst struct adc_esp32_conf *conf = (struct adc_esp32_conf *)dev-\u003econfig;\n   348→\tuint32_t clock_src_hz;\n   349→\n   350→\n   351→#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 (!SOC_ADC_RTC_CTRL_SUPPORTED || CONFIG_ADC_ESP32_DMA)\n   352→\tif (!device_is_ready(conf-\u003eclock_dev)) {\n   353→\t\treturn -ENODEV;\n   354→\t}\n   355→\n   356→\tclock_control_on(conf-\u003eclock_dev, conf-\u003eclock_subsys);\n   357→#endif\n   358→\n   359→\tesp_clk_tree_src_get_freq_hz(ADC_DIGI_CLK_SRC_DEFAULT,\n   360→\t\t\t\t     ESP_CLK_TREE_SRC_FREQ_PRECISION_CACHED, \u0026clock_src_hz);\n   361→\n   362→\tif (!device_is_ready(conf-\u003egpio_port)) {\n   363→\t\tLOG_ERR(\"gpio0 port not ready\");\n   364→\t\treturn -ENODEV;\n   365→\t}\n   366→\n   367→#ifdef CONFIG_ADC_ESP32_DMA\n   368→\tint err = adc_esp32_dma_init(dev);\n   369→\n   370→\tif (err \u003c 0) {\n   371→\t\treturn err;\n   372→\t}\n   373→#else\n   374→\tadc_oneshot_hal_cfg_t config = {\n   375→\t\t.unit = conf-\u003eunit,\n   376→\t\t.work_mode = ADC_HAL_SINGLE_READ_MODE,\n   377→\t\t.clk_src = ADC_DIGI_CLK_SRC_DEFAULT,\n   378→\t\t.clk_src_freq_hz = clock_src_hz,\n   379→\t};\n   380→\n   381→\tadc_oneshot_hal_init(\u0026data-\u003ehal, \u0026config);\n   382→\n   383→\tsar_periph_ctrl_adc_oneshot_power_acquire();\n   384→#endif /* CONFIG_ADC_ESP32_DMA */\n   385→\n   386→\tfor (uint8_t i = 0; i \u003c SOC_ADC_MAX_CHANNEL_NUM; i++) {\n   387→\t\tdata-\u003eresolution[i] = ADC_RESOLUTION_MAX;\n   388→\t\tdata-\u003eattenuation[i] = ADC_ATTEN_DB_0;\n   389→\t\tdata-\u003ecal_handle[i] = NULL;\n   390→\t}\n   391→\n   392→\t/* Default reference voltage. This could be calibrated externaly */\n   393→\tdata-\u003emeas_ref_internal = ADC_ESP32_DEFAULT_VREF_INTERNAL;\n   394→\n   395→\tadc_hw_calibration(conf-\u003eunit);\n   396→\n   397→\treturn 0;\n   398→}\n   399→\n   400→static DEVICE_API(adc, api_esp32_driver_api) = {\n   401→\t.channel_setup = adc_esp32_channel_setup,\n   402→\t.read = adc_esp32_read,\n   403→#ifdef CONFIG_ADC_ASYNC\n   404→\t.read_async = adc_esp32_read_async,\n   405→#endif /* CONFIG_ADC_ASYNC */\n   406→\t.ref_internal = ADC_ESP32_DEFAULT_VREF_INTERNAL,\n   407→};\n   408→\n   409→#if defined(CONFIG_ADC_ESP32_DMA) \u0026\u0026 SOC_GDMA_SUPPORTED\n   410→#define ADC_ESP32_CONF_INIT(n)                                                                     \\\n   411→\t.dma_dev = DEVICE_DT_GET(DT_INST_DMAS_CTLR_BY_IDX(n, 0)),                                  \\\n   412→\t.dma_channel = DT_INST_DMAS_CELL_BY_IDX(n, 0, channel)\n   413→#else\n   414→#define ADC_ESP32_CONF_INIT(n)\n   415→#endif /* defined(SOC_GDMA_SUPPORTED) \u0026\u0026 SOC_GDMA_SUPPORTED */\n   416→\n   417→#define ADC_ESP32_CHECK_CHANNEL_REF(chan)                                                          \\\n   418→\tBUILD_ASSERT(DT_ENUM_HAS_VALUE(chan, zephyr_reference, adc_ref_internal),                  \\\n   419→\t\t     \"adc_esp32 only supports ADC_REF_INTERNAL as a reference\");\n   420→\n   421→#define ESP32_ADC_INIT(inst)                                                                       \\\n   422→                                                                                                   \\\n   423→\tDT_INST_FOREACH_CHILD(inst, ADC_ESP32_CHECK_CHANNEL_REF)                                   \\\n   424→                                                                                                   \\\n   425→\tstatic const struct adc_esp32_conf adc_esp32_conf_##inst = {                               \\\n   426→\t\t.clock_dev = DEVICE_DT_GET(DT_INST_CLOCKS_CTLR(inst)),                             \\\n   427→\t\t.clock_subsys = (clock_control_subsys_t)DT_INST_CLOCKS_CELL(inst, offset),         \\\n   428→\t\t.unit = DT_PROP(DT_DRV_INST(inst), unit) - 1,                                      \\\n   429→\t\t.channel_count = DT_PROP(DT_DRV_INST(inst), channel_count),                        \\\n   430→\t\t.gpio_port = DEVICE_DT_GET(DT_NODELABEL(gpio0)),                                   \\\n   431→\t\tADC_ESP32_CONF_INIT(inst)};                                                        \\\n   432→                                                                                                   \\\n   433→\tstatic struct adc_esp32_data adc_esp32_data_##inst = {                                     \\\n   434→\t\t.hal =                                                                             \\\n   435→\t\t\t{                                                                          \\\n   436→\t\t\t\t.dev = (adc_oneshot_soc_handle_t)DT_INST_REG_ADDR(inst),           \\\n   437→\t\t\t},                                                                         \\\n   438→\t};                                                                                         \\\n   439→                                                                                                   \\\n   440→\tDEVICE_DT_INST_DEFINE(inst, adc_esp32_init, NULL, \u0026adc_esp32_data_##inst,                  \\\n   441→\t\t\t      \u0026adc_esp32_conf_##inst, POST_KERNEL, CONFIG_ADC_INIT_PRIORITY,       \\\n   442→\t\t\t      \u0026api_esp32_driver_api);\n   443→\n   444→DT_INST_FOREACH_STATUS_OKAY(ESP32_ADC_INIT)\n   445→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "5b2d43a8-c034-42d6-9f2e-35ccab88f829",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01Bojr4t3QHoe4GSEKnBRJqn",
+          "content": "     1→/*\n     2→ * Copyright (c) 2025 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#define DT_DRV_COMPAT espressif_esp32_adc\n     8→\n     9→#include \u003cesp_adc/adc_cali.h\u003e\n    10→#include \u003cesp_clk_tree.h\u003e\n    11→#include \u003cesp_private/periph_ctrl.h\u003e\n    12→#include \u003cesp_private/sar_periph_ctrl.h\u003e\n    13→#include \u003cesp_private/adc_share_hw_ctrl.h\u003e\n    14→\n    15→#include \"adc_esp32.h\"\n    16→\n    17→#include \u003czephyr/logging/log.h\u003e\n    18→LOG_MODULE_REGISTER(adc_esp32_dma, CONFIG_ADC_LOG_LEVEL);\n    19→\n    20→#if SOC_GDMA_SUPPORTED\n    21→#include \u003czephyr/drivers/dma.h\u003e\n    22→#include \u003czephyr/drivers/dma/dma_esp32.h\u003e\n    23→#elif defined(CONFIG_SOC_SERIES_ESP32)\n    24→#include \u003czephyr/dt-bindings/clock/esp32_clock.h\u003e\n    25→#include \u003czephyr/dt-bindings/interrupt-controller/esp-xtensa-intmux.h\u003e\n    26→#include \u003czephyr/drivers/interrupt_controller/intc_esp32.h\u003e\n    27→#define ADC_DMA_I2S_HOST 0\n    28→#elif defined(CONFIG_SOC_SERIES_ESP32S2)\n    29→#include \u003czephyr/dt-bindings/clock/esp32s2_clock.h\u003e\n    30→#include \u003czephyr/dt-bindings/interrupt-controller/esp32s2-xtensa-intmux.h\u003e\n    31→#include \u003czephyr/drivers/interrupt_controller/intc_esp32.h\u003e\n    32→#endif /* SOC_GDMA_SUPPORTED */\n    33→\n    34→#define ADC_DMA_BUFFER_SIZE        DMA_DESCRIPTOR_BUFFER_MAX_SIZE_4B_ALIGNED\n    35→#define ADC_DMA_MAX_CONV_DONE_TIME 1000\n    36→\n    37→#define UNIT_ATTEN_UNINIT UINT32_MAX\n    38→\n    39→#if SOC_GDMA_SUPPORTED\n    40→\n    41→static void IRAM_ATTR adc_esp32_dma_conv_done(const struct device *dma_dev, void *user_data,\n    42→\t\t\t\t\t      uint32_t channel, int status)\n    43→{\n    44→\tARG_UNUSED(dma_dev);\n    45→\tARG_UNUSED(status);\n    46→\n    47→\tconst struct device *dev = user_data;\n    48→\tstruct adc_esp32_data *data = dev-\u003edata;\n    49→\n    50→\tk_sem_give(\u0026data-\u003edma_conv_wait_lock);\n    51→}\n    52→\n    53→static int adc_esp32_dma_start(const struct device *dev, uint8_t *buf, size_t len)\n    54→{\n    55→\tconst struct adc_esp32_conf *conf = dev-\u003econfig;\n    56→\tint err;\n    57→\n    58→\tstruct dma_config dma_cfg = {0};\n    59→\tstruct dma_status dma_status = {0};\n    60→\tstruct dma_block_config dma_blk = {0};\n    61→\n    62→\terr = dma_get_status(conf-\u003edma_dev, conf-\u003edma_channel, \u0026dma_status);\n    63→\tif (err) {\n    64→\t\tLOG_ERR(\"Unable to get dma channel[%u] status (%d)\",\n    65→\t\t\t(unsigned int)conf-\u003edma_channel, err);\n    66→\t\treturn -EINVAL;\n    67→\t}\n    68→\n    69→\tif (dma_status.busy) {\n    70→\t\tLOG_ERR(\"dma channel[%u] is busy!\", (unsigned int)conf-\u003edma_channel);\n    71→\t\treturn -EBUSY;\n    72→\t}\n    73→\n    74→\tdma_cfg.channel_direction = PERIPHERAL_TO_MEMORY;\n    75→\tdma_cfg.dma_callback = adc_esp32_dma_conv_done;\n    76→\tdma_cfg.user_data = (void *)dev;\n    77→\tdma_cfg.dma_slot = ESP_GDMA_TRIG_PERIPH_ADC0;\n    78→\tdma_cfg.block_count = 1;\n    79→\tdma_cfg.head_block = \u0026dma_blk;\n    80→\tdma_blk.block_size = len;\n    81→\tdma_blk.dest_address = (uint32_t)buf;\n    82→\n    83→\terr = dma_config(conf-\u003edma_dev, conf-\u003edma_channel, \u0026dma_cfg);\n    84→\tif (err) {\n    85→\t\tLOG_ERR(\"Error configuring dma (%d)\", err);\n    86→\t\treturn err;\n    87→\t}\n    88→\n    89→\terr = dma_start(conf-\u003edma_dev, conf-\u003edma_channel);\n    90→\tif (err) {\n    91→\t\tLOG_ERR(\"Error starting dma (%d)\", err);\n    92→\t\treturn err;\n    93→\t}\n    94→\n    95→\treturn 0;\n    96→}\n    97→\n    98→static int adc_esp32_dma_stop(const struct device *dev)\n    99→{\n   100→\tconst struct adc_esp32_conf *conf = dev-\u003econfig;\n   101→\tint err;\n   102→\n   103→\terr = dma_stop(conf-\u003edma_dev, conf-\u003edma_channel);\n   104→\tif (err) {\n   105→\t\tLOG_ERR(\"Error stopping dma (%d)\", err);\n   106→\t}\n   107→\n   108→\treturn err;\n   109→}\n   110→\n   111→#else\n   112→\n   113→static IRAM_ATTR void adc_esp32_dma_intr_handler(void *arg)\n   114→{\n   115→\tconst struct device *dev = arg;\n   116→\tstruct adc_esp32_data *data = dev-\u003edata;\n   117→\n   118→#if defined(CONFIG_SOC_SERIES_ESP32)\n   119→\tif (i2s_ll_get_intr_status(I2S_LL_GET_HW(ADC_DMA_I2S_HOST)) \u0026 ADC_HAL_DMA_INTR_MASK) {\n   120→\t\ti2s_ll_clear_intr_status(I2S_LL_GET_HW(ADC_DMA_I2S_HOST), ADC_HAL_DMA_INTR_MASK);\n   121→#elif defined(CONFIG_SOC_SERIES_ESP32S2)\n   122→\tif (spi_ll_get_intr(SPI_LL_GET_HW(SPI3_HOST), ADC_HAL_DMA_INTR_MASK)) {\n   123→\t\tspi_ll_clear_intr(SPI_LL_GET_HW(SPI3_HOST), ADC_HAL_DMA_INTR_MASK);\n   124→#endif /* defined(CONFIG_SOC_SERIES_ESP32) */\n   125→\t\tk_sem_give(\u0026data-\u003edma_conv_wait_lock);\n   126→\t}\n   127→}\n   128→\n   129→#endif /* SOC_GDMA_SUPPORTED */\n   130→\n   131→static int adc_esp32_fill_digi_ctrlr_cfg(const struct device *dev, const struct adc_sequence *seq,\n   132→\t\t\t\t\t uint32_t sample_freq_hz,\n   133→\t\t\t\t\t adc_digi_pattern_config_t *pattern_config,\n   134→\t\t\t\t\t adc_hal_digi_ctrlr_cfg_t *adc_hal_digi_ctrlr_cfg,\n   135→\t\t\t\t\t uint32_t *pattern_len, uint32_t *unit_attenuation)\n   136→{\n   137→\tconst struct adc_esp32_conf *conf = dev-\u003econfig;\n   138→\tstruct adc_esp32_data *data = dev-\u003edata;\n   139→\n   140→\tadc_digi_pattern_config_t *adc_digi_pattern_config = pattern_config;\n   141→\tuint32_t channel_mask = 1, channels_copy = seq-\u003echannels;\n   142→\n   143→\t*pattern_len = 0;\n   144→\t*unit_attenuation = UNIT_ATTEN_UNINIT;\n   145→\tfor (uint8_t channel_id = 0; channel_id \u003c conf-\u003echannel_count; channel_id++) {\n   146→\t\tif (channels_copy \u0026 channel_mask) {\n   147→\t\t\tif (*unit_attenuation == UNIT_ATTEN_UNINIT) {\n   148→\t\t\t\t*unit_attenuation = data-\u003eattenuation[channel_id];\n   149→\t\t\t}\n   150→\n   151→\t\t\tif (*unit_attenuation != data-\u003eattenuation[channel_id]) {\n   152→\t\t\t\tLOG_ERR(\"Channel[%u] attenuation different of unit[%u] attenuation\",\n   153→\t\t\t\t\t(unsigned int)channel_id, (unsigned int)conf-\u003eunit);\n   154→\t\t\t\treturn -EINVAL;\n   155→\t\t\t}\n   156→\n   157→\t\t\tadc_digi_pattern_config-\u003eatten = data-\u003eattenuation[channel_id];\n   158→\t\t\tadc_digi_pattern_config-\u003echannel = channel_id;\n   159→\t\t\tadc_digi_pattern_config-\u003eunit = conf-\u003eunit;\n   160→\t\t\tadc_digi_pattern_config-\u003ebit_width = seq-\u003eresolution;\n   161→\t\t\tadc_digi_pattern_config++;\n   162→\n   163→\t\t\t*pattern_len += 1;\n   164→\t\t\tif (*pattern_len \u003e SOC_ADC_PATT_LEN_MAX) {\n   165→\t\t\t\tLOG_ERR(\"Max pattern len is %d\", SOC_ADC_PATT_LEN_MAX);\n   166→\t\t\t\treturn -EINVAL;\n   167→\t\t\t}\n   168→\n   169→\t\t\tchannels_copy \u0026= ~channel_mask;\n   170→\t\t\tif (!channels_copy) {\n   171→\t\t\t\tbreak;\n   172→\t\t\t}\n   173→\t\t}\n   174→\t\tchannel_mask \u003c\u003c= 1;\n   175→\t}\n   176→\n   177→\tsoc_module_clk_t clk_src = ADC_DIGI_CLK_SRC_DEFAULT;\n   178→\tuint32_t clk_src_freq_hz = 0;\n   179→\n   180→\tint err = esp_clk_tree_src_get_freq_hz(clk_src, ESP_CLK_TREE_SRC_FREQ_PRECISION_CACHED,\n   181→\t\t\t\t\t       \u0026clk_src_freq_hz);\n   182→\tif (err != ESP_OK) {\n   183→\t\treturn -EIO;\n   184→\t}\n   185→\n   186→\tadc_hal_digi_ctrlr_cfg-\u003econv_mode =\n   187→\t\t(conf-\u003eunit == ADC_UNIT_1) ? ADC_CONV_SINGLE_UNIT_1 : ADC_CONV_SINGLE_UNIT_2;\n   188→\tadc_hal_digi_ctrlr_cfg-\u003eclk_src = clk_src;\n   189→\tadc_hal_digi_ctrlr_cfg-\u003eclk_src_freq_hz = clk_src_freq_hz;\n   190→\tadc_hal_digi_ctrlr_cfg-\u003esample_freq_hz = sample_freq_hz;\n   191→\tadc_hal_digi_ctrlr_cfg-\u003eadc_pattern = pattern_config;\n   192→\tadc_hal_digi_ctrlr_cfg-\u003eadc_pattern_len = *pattern_len;\n   193→\n   194→\treturn 0;\n   195→}\n   196→\n   197→static void adc_esp32_digi_start(const struct device *dev,\n   198→\t\t\t\t adc_hal_digi_ctrlr_cfg_t *adc_hal_digi_ctrlr_cfg,\n   199→\t\t\t\t uint32_t number_of_adc_samples, uint32_t unit_attenuation)\n   200→{\n   201→\tconst struct adc_esp32_conf *conf = dev-\u003econfig;\n   202→\tstruct adc_esp32_data *data = dev-\u003edata;\n   203→\n   204→\tperiph_module_reset(PERIPH_SARADC_MODULE);\n   205→\tsar_periph_ctrl_adc_continuous_power_acquire();\n   206→\tadc_lock_acquire(conf-\u003eunit);\n   207→\n   208→#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n   209→\tadc_set_hw_calibration_code(conf-\u003eunit, unit_attenuation);\n   210→#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\n   211→\n   212→#if SOC_ADC_ARBITER_SUPPORTED\n   213→\tif (conf-\u003eunit == ADC_UNIT_2) {\n   214→\t\tadc_arbiter_t config = ADC_ARBITER_CONFIG_DEFAULT();\n   215→\n   216→\t\tadc_hal_arbiter_config(\u0026config);\n   217→\t}\n   218→#endif /* SOC_ADC_ARBITER_SUPPORTED */\n   219→\n   220→\tadc_hal_dma_config_t adc_hal_dma_config = {\n   221→#if defined(CONFIG_SOC_SERIES_ESP32)\n   222→\t\t.dev = (void *)I2S_LL_GET_HW(ADC_DMA_I2S_HOST),\n   223→\t\t.eof_desc_num = 1,\n   224→\t\t.eof_step = 1,\n   225→#elif defined(CONFIG_SOC_SERIES_ESP32S2)\n   226→\t\t.dev = (void *)SPI_LL_GET_HW(SPI3_HOST),\n   227→\t\t.eof_desc_num = 1,\n   228→\t\t.eof_step = 1,\n   229→#endif /* defined(CONFIG_SOC_SERIES_ESP32) */\n   230→\t\t.eof_num = number_of_adc_samples,\n   231→\t};\n   232→\n   233→\tadc_hal_dma_ctx_config(\u0026data-\u003eadc_hal_dma_ctx, \u0026adc_hal_dma_config);\n   234→\tadc_hal_set_controller(conf-\u003eunit, ADC_HAL_CONTINUOUS_READ_MODE);\n   235→\tadc_hal_digi_init(\u0026data-\u003eadc_hal_dma_ctx);\n   236→\tadc_hal_digi_controller_config(\u0026data-\u003eadc_hal_dma_ctx, adc_hal_digi_ctrlr_cfg);\n   237→\tadc_hal_digi_start(\u0026data-\u003eadc_hal_dma_ctx, data-\u003edma_buffer);\n   238→}\n   239→\n   240→static void adc_esp32_digi_stop(const struct device *dev)\n   241→{\n   242→\tconst struct adc_esp32_conf *conf = dev-\u003econfig;\n   243→\tstruct adc_esp32_data *data = dev-\u003edata;\n   244→\n   245→\tadc_hal_digi_dis_intr(\u0026data-\u003eadc_hal_dma_ctx, ADC_HAL_DMA_INTR_MASK);\n   246→\tadc_hal_digi_clr_intr(\u0026data-\u003eadc_hal_dma_ctx, ADC_HAL_DMA_INTR_MASK);\n   247→\tadc_hal_digi_stop(\u0026data-\u003eadc_hal_dma_ctx);\n   248→\n   249→#if ADC_LL_WORKAROUND_CLEAR_EOF_COUNTER\n   250→\tperiph_module_reset(PERIPH_SARADC_MODULE);\n   251→\tadc_ll_digi_dma_clr_eof();\n   252→#endif\n   253→\n   254→\tadc_hal_digi_deinit(\u0026data-\u003eadc_hal_dma_ctx);\n   255→\tadc_lock_release(conf-\u003eunit);\n   256→\tsar_periph_ctrl_adc_continuous_power_release();\n   257→}\n   258→\n   259→static void adc_esp32_fill_seq_buffer(const void *seq_buffer, const void *dma_buffer,\n   260→\t\t\t\t      uint32_t number_of_samples)\n   261→{\n   262→\tuint16_t *sample = (uint16_t *)seq_buffer;\n   263→\tadc_digi_output_data_t *digi_data = (adc_digi_output_data_t *)dma_buffer;\n   264→\n   265→\tfor (uint32_t k = 0; k \u003c number_of_samples; k++) {\n   266→#if SOC_GDMA_SUPPORTED\n   267→\t\t*sample++ = (uint16_t)(digi_data++)-\u003etype2.data;\n   268→#else\n   269→\t\t*sample++ = (uint16_t)(digi_data++)-\u003etype1.data;\n   270→#endif /* SOC_GDMA_SUPPORTED */\n   271→\t}\n   272→}\n   273→\n   274→static int adc_esp32_wait_for_dma_conv_done(const struct device *dev)\n   275→{\n   276→\tstruct adc_esp32_data *data = dev-\u003edata;\n   277→\tint err = 0;\n   278→\n   279→\terr = k_sem_take(\u0026data-\u003edma_conv_wait_lock, K_MSEC(ADC_DMA_MAX_CONV_DONE_TIME));\n   280→\tif (err) {\n   281→\t\tLOG_ERR(\"Error taking dma_conv_wait_lock (%d)\", err);\n   282→\t}\n   283→\n   284→\treturn err;\n   285→}\n   286→\n   287→int adc_esp32_dma_read(const struct device *dev, const struct adc_sequence *seq)\n   288→{\n   289→\tstruct adc_esp32_data *data = dev-\u003edata;\n   290→\tint err = 0;\n   291→\tuint32_t adc_pattern_len, unit_attenuation;\n   292→\tadc_hal_digi_ctrlr_cfg_t adc_hal_digi_ctrlr_cfg;\n   293→\tadc_digi_pattern_config_t adc_digi_pattern_config[SOC_ADC_MAX_CHANNEL_NUM];\n   294→\n   295→\tconst struct adc_sequence_options *options = seq-\u003eoptions;\n   296→\tuint32_t sample_freq_hz = SOC_ADC_SAMPLE_FREQ_THRES_HIGH, number_of_samplings = 1;\n   297→\n   298→\tif (options \u0026\u0026 options-\u003ecallback) {\n   299→\t\treturn -ENOTSUP;\n   300→\t}\n   301→\n   302→\tif (options \u0026\u0026 options-\u003einterval_us) {\n   303→\t\tsample_freq_hz = MHZ(1) / options-\u003einterval_us;\n   304→\t\tif (sample_freq_hz \u003c SOC_ADC_SAMPLE_FREQ_THRES_LOW ||\n   305→\t\t    sample_freq_hz \u003e SOC_ADC_SAMPLE_FREQ_THRES_HIGH) {\n   306→\t\t\tLOG_ERR(\"ADC sampling frequency out of range: %uHz\", sample_freq_hz);\n   307→\t\t\treturn -EINVAL;\n   308→\t\t}\n   309→\t}\n   310→\n   311→\terr = adc_esp32_fill_digi_ctrlr_cfg(dev, seq, sample_freq_hz, adc_digi_pattern_config,\n   312→\t\t\t\t\t    \u0026adc_hal_digi_ctrlr_cfg, \u0026adc_pattern_len,\n   313→\t\t\t\t\t    \u0026unit_attenuation);\n   314→\tif (err || adc_pattern_len == 0) {\n   315→\t\treturn -EINVAL;\n   316→\t}\n   317→\n   318→\tif (options != NULL) {\n   319→\t\tnumber_of_samplings = options-\u003eextra_samplings + 1;\n   320→\t}\n   321→\n   322→\tif (seq-\u003ebuffer_size \u003c (number_of_samplings * sizeof(uint16_t))) {\n   323→\t\tLOG_ERR(\"buffer size is not enough to store all samples!\");\n   324→\t\treturn -EINVAL;\n   325→\t}\n   326→\n   327→\tuint32_t number_of_adc_samples = number_of_samplings * adc_pattern_len;\n   328→\tuint32_t number_of_adc_dma_data_bytes =\n   329→\t\tnumber_of_adc_samples * SOC_ADC_DIGI_DATA_BYTES_PER_CONV;\n   330→\n   331→\tif (number_of_adc_dma_data_bytes \u003e ADC_DMA_BUFFER_SIZE) {\n   332→\t\tLOG_ERR(\"dma buffer size insufficient to store a complete sequence!\");\n   333→\t\treturn -EINVAL;\n   334→\t}\n   335→\n   336→#if SOC_GDMA_SUPPORTED\n   337→\terr = adc_esp32_dma_start(dev, data-\u003edma_buffer, number_of_adc_dma_data_bytes);\n   338→#else\n   339→\terr = esp_intr_enable(data-\u003eirq_handle);\n   340→#endif /* SOC_GDMA_SUPPORTED */\n   341→\tif (err) {\n   342→\t\treturn err;\n   343→\t}\n   344→\n   345→\tadc_esp32_digi_start(dev, \u0026adc_hal_digi_ctrlr_cfg, number_of_adc_samples, unit_attenuation);\n   346→\n   347→\terr = adc_esp32_wait_for_dma_conv_done(dev);\n   348→\tif (err) {\n   349→\t\treturn err;\n   350→\t}\n   351→\n   352→\tadc_esp32_digi_stop(dev);\n   353→\n   354→#if SOC_GDMA_SUPPORTED\n   355→\terr = adc_esp32_dma_stop(dev);\n   356→#else\n   357→\terr = esp_intr_disable(data-\u003eirq_handle);\n   358→#endif /* SOC_GDMA_SUPPORTED */\n   359→\tif (err) {\n   360→\t\treturn err;\n   361→\t}\n   362→\n   363→\tadc_esp32_fill_seq_buffer(seq-\u003ebuffer, data-\u003edma_buffer, number_of_adc_samples);\n   364→\n   365→\treturn 0;\n   366→}\n   367→\n   368→int adc_esp32_dma_channel_setup(const struct device *dev, const struct adc_channel_cfg *cfg)\n   369→{\n   370→\t__maybe_unused const struct adc_esp32_conf *conf =\n   371→\t\t(const struct adc_esp32_conf *)dev-\u003econfig;\n   372→\n   373→\tif (!SOC_ADC_DIG_SUPPORTED_UNIT(conf-\u003eunit)) {\n   374→\t\tLOG_ERR(\"ADC2 dma mode is no longer supported, please use ADC1!\");\n   375→\t\treturn -EINVAL;\n   376→\t}\n   377→\n   378→\treturn 0;\n   379→}\n   380→\n   381→int adc_esp32_dma_init(const struct device *dev)\n   382→{\n   383→\tstruct adc_esp32_data *data = (struct adc_esp32_data *)dev-\u003edata;\n   384→\n   385→\tif (k_sem_init(\u0026data-\u003edma_conv_wait_lock, 0, 1)) {\n   386→\t\tLOG_ERR(\"dma_conv_wait_lock initialization failed!\");\n   387→\t\treturn -EINVAL;\n   388→\t}\n   389→\n   390→\tdata-\u003eadc_hal_dma_ctx.rx_desc = k_aligned_alloc(sizeof(uint32_t), sizeof(dma_descriptor_t));\n   391→\tif (!data-\u003eadc_hal_dma_ctx.rx_desc) {\n   392→\t\tLOG_ERR(\"rx_desc allocation failed!\");\n   393→\t\treturn -ENOMEM;\n   394→\t}\n   395→\tLOG_DBG(\"rx_desc = 0x%08X\", (unsigned int)data-\u003eadc_hal_dma_ctx.rx_desc);\n   396→\n   397→\tdata-\u003edma_buffer = k_aligned_alloc(sizeof(uint32_t), ADC_DMA_BUFFER_SIZE);\n   398→\tif (!data-\u003edma_buffer) {\n   399→\t\tLOG_ERR(\"dma buffer allocation failed!\");\n   400→\t\tk_free(data-\u003eadc_hal_dma_ctx.rx_desc);\n   401→\t\treturn -ENOMEM;\n   402→\t}\n   403→\tLOG_DBG(\"data-\u003edma_buffer = 0x%08X\", (unsigned int)data-\u003edma_buffer);\n   404→\n   405→#ifdef CONFIG_SOC_SERIES_ESP32\n   406→\tperiph_module_enable(PERIPH_I2S0_MODULE);\n   407→\ti2s_ll_enable_clock(I2S_LL_GET_HW(ADC_DMA_I2S_HOST));\n   408→\n   409→\tint err = esp_intr_alloc(I2S0_INTR_SOURCE, ESP_INTR_FLAG_IRAM | ESP_INTR_FLAG_INTRDISABLED,\n   410→\t\t\t\t adc_esp32_dma_intr_handler, (void *)dev, \u0026(data-\u003eirq_handle));\n   411→\tif (err != 0) {\n   412→\t\tLOG_ERR(\"Could not allocate interrupt (err %d)\", err);\n   413→\t\tk_free(data-\u003eadc_hal_dma_ctx.rx_desc);\n   414→\t\tk_free(data-\u003edma_buffer);\n   415→\t\treturn err;\n   416→\t}\n   417→#endif /* CONFIG_SOC_SERIES_ESP32 */\n   418→\n   419→#ifdef CONFIG_SOC_SERIES_ESP32S2\n   420→\tperiph_module_enable(PERIPH_HSPI_MODULE);\n   421→\tperiph_module_enable(PERIPH_SPI3_DMA_MODULE);\n   422→\n   423→\tint err = esp_intr_alloc(SPI3_DMA_INTR_SOURCE,\n   424→\t\t\t\t ESP_INTR_FLAG_IRAM | ESP_INTR_FLAG_INTRDISABLED,\n   425→\t\t\t\t adc_esp32_dma_intr_handler, (void *)dev, \u0026(data-\u003eirq_handle));\n   426→\tif (err != 0) {\n   427→\t\tLOG_ERR(\"Could not allocate interrupt (err %d)\", err);\n   428→\t\tk_free(data-\u003eadc_hal_dma_ctx.rx_desc);\n   429→\t\tk_free(data-\u003edma_buffer);\n   430→\t\treturn err;\n   431→\t}\n   432→#endif /* CONFIG_SOC_SERIES_ESP32S2 */\n   433→\n   434→\treturn 0;\n   435→}\n   436→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "347ad2e3-34ca-4233-920e-dc6e629261ac",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_017NpVhDemPZhYXLU2anXEY1",
+          "content": "     1→/*\n     2→ * Copyright (c) 2025 Espressif Systems (Shanghai) CO LTD\n     3→ *\n     4→ * SPDX-License-Identifier: Apache-2.0\n     5→ */\n     6→\n     7→#include \u003chal/adc_hal.h\u003e\n     8→#include \u003chal/adc_oneshot_hal.h\u003e\n     9→#include \u003chal/adc_types.h\u003e\n    10→#include \u003cesp_adc/adc_cali.h\u003e\n    11→\n    12→#include \u003czephyr/kernel.h\u003e\n    13→#include \u003czephyr/drivers/adc.h\u003e\n    14→#include \u003czephyr/drivers/clock_control.h\u003e\n    15→\n    16→struct adc_esp32_conf {\n    17→\tconst struct device *clock_dev;\n    18→\tconst clock_control_subsys_t clock_subsys;\n    19→\tadc_unit_t unit;\n    20→\tuint8_t channel_count;\n    21→\tconst struct device *gpio_port;\n    22→#if defined(CONFIG_ADC_ESP32_DMA) \u0026\u0026 SOC_GDMA_SUPPORTED\n    23→\tconst struct device *dma_dev;\n    24→\tuint8_t dma_channel;\n    25→#endif /* defined(CONFIG_ADC_ESP32_DMA) \u0026\u0026 SOC_GDMA_SUPPORTED */\n    26→};\n    27→\n    28→struct adc_esp32_data {\n    29→\tadc_oneshot_hal_ctx_t hal;\n    30→\tadc_atten_t attenuation[SOC_ADC_MAX_CHANNEL_NUM];\n    31→\tuint8_t resolution[SOC_ADC_MAX_CHANNEL_NUM];\n    32→\tadc_cali_handle_t cal_handle[SOC_ADC_MAX_CHANNEL_NUM];\n    33→\tuint16_t meas_ref_internal;\n    34→\tuint16_t *buffer;\n    35→#ifdef CONFIG_ADC_ESP32_DMA\n    36→\tadc_hal_dma_ctx_t adc_hal_dma_ctx;\n    37→\tuint8_t *dma_buffer;\n    38→\tstruct k_sem dma_conv_wait_lock;\n    39→#if !SOC_GDMA_SUPPORTED\n    40→\tstruct intr_handle_data_t *irq_handle;\n    41→#endif /* !SOC_GDMA_SUPPORTED */\n    42→#endif /* CONFIG_ADC_ESP32_DMA */\n    43→};\n    44→\n    45→int adc_esp32_dma_read(const struct device *dev, const struct adc_sequence *seq);\n    46→\n    47→int adc_esp32_dma_channel_setup(const struct device *dev, const struct adc_channel_cfg *cfg);\n    48→\n    49→int adc_esp32_dma_init(const struct device *dev);\n    50→\n\n\u003csystem-reminder\u003e\nWhenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.\n\u003c/system-reminder\u003e\n"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "09a60e11-750b-44c8-a9a3-72cfe0fd6872",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Grep",
+          "id": "toolu_01BPQNjGarJ7StZBtYTFDAJF",
+          "input": {
+            "glob": "*adc_hal*",
+            "output_mode": "content",
+            "path": "/root/zephyrproject/modules/hal/espressif/components/hal",
+            "pattern": "SOC_ADC_\\w+"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "d84448af-3210-4132-9936-18883224b515",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Grep",
+          "id": "toolu_01CGXkFA1tfXKUSekQkJRwyb",
+          "input": {
+            "glob": "adc_esp32*",
+            "output_mode": "content",
+            "path": "/root/zephyrproject/zephyr/drivers/adc",
+            "pattern": "SOC_ADC_\\w+"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "682314ea-6ac0-45f5-8d72-b16b615254b4",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01BPQNjGarJ7StZBtYTFDAJF",
+          "content": "/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c:146:#if CONFIG_IDF_TARGET_ESP32 || SOC_ADC_DIGI_CONTROLLER_NUM == 1\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c:148:#elif (SOC_ADC_DIGI_CONTROLLER_NUM \u003e= 2)\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c:194:#if (SOC_ADC_DIGI_CONTROLLER_NUM == 1)\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c:204:#elif (SOC_ADC_DIGI_CONTROLLER_NUM \u003e= 2)\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal.c:281:    adc_hal_digi_dma_link_descriptors(hal-\u003erx_desc, data_buf, hal-\u003eeof_num * SOC_ADC_DIGI_DATA_BYTES_PER_CONV, hal-\u003eeof_step, hal-\u003eeof_desc_num);\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:26:#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:28:#elif SOC_ADC_RTC_CTRL_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:43:#if !SOC_ADC_ARBITER_SUPPORTED                  //No ADC2 arbiter on ESP32\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:44:#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:56:#endif  //#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:75:#if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:81:#endif  // #if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:87:#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:96:static uint32_t s_previous_init_code[SOC_ADC_PERIPH_NUM] = {\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:97:    [0 ... (SOC_ADC_PERIPH_NUM - 1)] = -1,\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:108:#if SOC_ADC_SELF_HW_CALI_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:129:#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 !SOC_ADC_RTC_CTRL_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:152:#if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:157:#endif // #if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:209:#endif  //#if SOC_ADC_SELF_HW_CALI_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/adc_hal_common.c:210:#endif //SOC_ADC_CALIBRATION_V1_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h:40:#if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h:54:#endif  //#if SOC_ADC_ARBITER_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h:59:#if SOC_ADC_CALIBRATION_V1_SUPPORTED\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal_common.h:93:#endif //SOC_ADC_CALIBRATION_V1_SUPPORTED"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "75513514-223c-47d8-8607-bac204d5a57d",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01CGXkFA1tfXKUSekQkJRwyb",
+          "content": "drivers/adc/adc_esp32.c:20:#define ADC_RESOLUTION_MIN SOC_ADC_DIGI_MIN_BITWIDTH\ndrivers/adc/adc_esp32.c:21:#define ADC_RESOLUTION_MAX SOC_ADC_DIGI_MAX_BITWIDTH\ndrivers/adc/adc_esp32.c:32:#if SOC_ADC_CALIBRATION_V1_SUPPORTED\ndrivers/adc/adc_esp32.c:34:\tfor (int j = 0; j \u003c SOC_ADC_ATTEN_NUM; j++) {\ndrivers/adc/adc_esp32.c:36:#if SOC_ADC_CALIB_CHAN_COMPENS_SUPPORTED\ndrivers/adc/adc_esp32.c:38:\t\tfor (int k = 0; k \u003c SOC_ADC_CHANNEL_NUM(unit); k++) {\ndrivers/adc/adc_esp32.c:41:#endif /* SOC_ADC_CALIB_CHAN_COMPENS_SUPPORTED */\ndrivers/adc/adc_esp32.c:43:#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\ndrivers/adc/adc_esp32.c:171:#if SOC_ADC_CALIBRATION_V1_SUPPORTED\ndrivers/adc/adc_esp32.c:173:#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\ndrivers/adc/adc_esp32.c:351:#if SOC_ADC_DIG_CTRL_SUPPORTED \u0026\u0026 (!SOC_ADC_RTC_CTRL_SUPPORTED || CONFIG_ADC_ESP32_DMA)\ndrivers/adc/adc_esp32.c:386:\tfor (uint8_t i = 0; i \u003c SOC_ADC_MAX_CHANNEL_NUM; i++) {\ndrivers/adc/adc_esp32_dma.c:164:\t\t\tif (*pattern_len \u003e SOC_ADC_PATT_LEN_MAX) {\ndrivers/adc/adc_esp32_dma.c:165:\t\t\t\tLOG_ERR(\"Max pattern len is %d\", SOC_ADC_PATT_LEN_MAX);\ndrivers/adc/adc_esp32_dma.c:208:#if SOC_ADC_CALIBRATION_V1_SUPPORTED\ndrivers/adc/adc_esp32_dma.c:210:#endif /* SOC_ADC_CALIBRATION_V1_SUPPORTED */\ndrivers/adc/adc_esp32_dma.c:212:#if SOC_ADC_ARBITER_SUPPORTED\ndrivers/adc/adc_esp32_dma.c:218:#endif /* SOC_ADC_ARBITER_SUPPORTED */\ndrivers/adc/adc_esp32_dma.c:293:\tadc_digi_pattern_config_t adc_digi_pattern_config[SOC_ADC_MAX_CHANNEL_NUM];\ndrivers/adc/adc_esp32_dma.c:296:\tuint32_t sample_freq_hz = SOC_ADC_SAMPLE_FREQ_THRES_HIGH, number_of_samplings = 1;\ndrivers/adc/adc_esp32_dma.c:304:\t\tif (sample_freq_hz \u003c SOC_ADC_SAMPLE_FREQ_THRES_LOW ||\ndrivers/adc/adc_esp32_dma.c:305:\t\t    sample_freq_hz \u003e SOC_ADC_SAMPLE_FREQ_THRES_HIGH) {\ndrivers/adc/adc_esp32_dma.c:329:\t\tnumber_of_adc_samples * SOC_ADC_DIGI_DATA_BYTES_PER_CONV;\ndrivers/adc/adc_esp32_dma.c:373:\tif (!SOC_ADC_DIG_SUPPORTED_UNIT(conf-\u003eunit)) {\ndrivers/adc/adc_esp32.h:30:\tadc_atten_t attenuation[SOC_ADC_MAX_CHANNEL_NUM];\ndrivers/adc/adc_esp32.h:31:\tuint8_t resolution[SOC_ADC_MAX_CHANNEL_NUM];\ndrivers/adc/adc_esp32.h:32:\tadc_cali_handle_t cal_handle[SOC_ADC_MAX_CHANNEL_NUM];"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "44fefa0b-e028-49db-b586-81c5ac2a1020",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Grep",
+          "id": "toolu_01LM9RTZQikxA41617SZpFYf",
+          "input": {
+            "head_limit": 20,
+            "output_mode": "content",
+            "path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32.c",
+            "pattern": "#include"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "3f1738ff-8baa-4b71-891c-fc7f4cf674b0",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Grep",
+          "id": "toolu_017WTdBWoUrNCrF1F1mBZ18r",
+          "input": {
+            "head_limit": 35,
+            "output_mode": "content",
+            "path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32_dma.c",
+            "pattern": "#include"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "1dc42ff4-d10f-4cb2-999c-82dc9ed45680",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Grep",
+          "id": "toolu_01UqDm4mf9VubFZ7qCA7zk9B",
+          "input": {
+            "output_mode": "content",
+            "path": "/root/zephyrproject/zephyr/drivers/adc/adc_esp32.h",
+            "pattern": "#include"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "ff9316c2-fd89-44d6-a8af-69c383d040c9",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_017WTdBWoUrNCrF1F1mBZ18r",
+          "content": "9:#include \u003cesp_adc/adc_cali.h\u003e\n10:#include \u003cesp_clk_tree.h\u003e\n11:#include \u003cesp_private/periph_ctrl.h\u003e\n12:#include \u003cesp_private/sar_periph_ctrl.h\u003e\n13:#include \u003cesp_private/adc_share_hw_ctrl.h\u003e\n15:#include \"adc_esp32.h\"\n17:#include \u003czephyr/logging/log.h\u003e\n21:#include \u003czephyr/drivers/dma.h\u003e\n22:#include \u003czephyr/drivers/dma/dma_esp32.h\u003e\n24:#include \u003czephyr/dt-bindings/clock/esp32_clock.h\u003e\n25:#include \u003czephyr/dt-bindings/interrupt-controller/esp-xtensa-intmux.h\u003e\n26:#include \u003czephyr/drivers/interrupt_controller/intc_esp32.h\u003e\n29:#include \u003czephyr/dt-bindings/clock/esp32s2_clock.h\u003e\n30:#include \u003czephyr/dt-bindings/interrupt-controller/esp32s2-xtensa-intmux.h\u003e\n31:#include \u003czephyr/drivers/interrupt_controller/intc_esp32.h\u003e\n\n[Showing results with pagination = limit: 35, offset: 0]"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "a6cfed03-1b87-4935-afe7-683a0014fd09",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01LM9RTZQikxA41617SZpFYf",
+          "content": "9:#include \u003cesp_clk_tree.h\u003e\n10:#include \u003cesp_private/sar_periph_ctrl.h\u003e\n11:#include \u003cesp_private/adc_share_hw_ctrl.h\u003e\n13:#include \"adc_esp32.h\"\n15:#include \u003czephyr/drivers/gpio.h\u003e\n17:#include \u003czephyr/logging/log.h\u003e\n\n[Showing results with pagination = limit: 20, offset: 0]"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "1008c8e4-0b4e-405f-95c6-02aefd2fc3ad",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01UqDm4mf9VubFZ7qCA7zk9B",
+          "content": "7:#include \u003chal/adc_hal.h\u003e\n8:#include \u003chal/adc_oneshot_hal.h\u003e\n9:#include \u003chal/adc_types.h\u003e\n10:#include \u003cesp_adc/adc_cali.h\u003e\n12:#include \u003czephyr/kernel.h\u003e\n13:#include \u003czephyr/drivers/adc.h\u003e\n14:#include \u003czephyr/drivers/clock_control.h\u003e"
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "b40d10a9-f7e5-471a-b6e3-517f3ca10274",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01QfJLj7vKBMTo8pMcWPZ34a",
+          "input": {
+            "command": "find /root/zephyrproject -name \"soc_caps.h\" -type f 2\u003e/dev/null | head -10",
+            "description": "Find soc_caps.h files in the codebase"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "a4272905-7cde-4b07-8c8d-61aaba912e83",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "id": "toolu_01TnWjTq6uGf3RVRuaNcrovx",
+          "input": {
+            "command": "grep -r \"soc_caps.h\" /root/zephyrproject/modules/hal/espressif/components/hal/include/hal/*.h 2\u003e/dev/null | grep -v Binary",
+            "description": "Check which HAL header files include soc_caps.h"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "5ac423dd-1c22-43c5-87cf-c5b8dffb6871",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01QfJLj7vKBMTo8pMcWPZ34a",
+          "content": "/root/zephyrproject/modules/hal/espressif/components/soc/esp32c3/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32c6/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32h2/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32s2/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32c2/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/linux/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32/include/soc/soc_caps.h\n/root/zephyrproject/modules/hal/espressif/components/soc/esp32s3/include/soc/soc_caps.h"
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "e9c90e45-8070-44ac-a193-8b7ef9014f62",
+    "parent_tool_use_id": "toolu_01KFDYP1nNuZhfsAnqxvchqn",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01TnWjTq6uGf3RVRuaNcrovx",
+          "content": "/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_oneshot_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/adc_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/aes_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/brownout_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/cam_ctlr_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/cam_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/clk_tree_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/ecc_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/efuse_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/gdma_types.h: * @note Some peripheral might not be available on certain chip, please refer to `soc_caps.h` for detail.\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/glitch_filter_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/gpio_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/gpio_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/i2c_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/i2s_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/i2s_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/lcd_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/ledc_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/ledc_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/lp_timer_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/mcpwm_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/modem_clock_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/mpu_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/parlio_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/pau_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/pau_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/pmu_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/rmt_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/rtc_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/rtc_io_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/sdm_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/sha_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/spi_flash_encrypt_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/spi_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/spi_slave_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/spi_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/systimer_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/systimer_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/temperature_sensor_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/touch_sensor_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/twai_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/uart_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_dwc_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_dwc_ll.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_serial_jtag_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_serial_jtag_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_wrap_hal.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/usb_wrap_types.h:#include \"soc/soc_caps.h\"\n/root/zephyrproject/modules/hal/espressif/components/hal/include/hal/wdt_hal.h:#include \"soc/soc_caps.h\""
+        }
+      ]
+    }
+  },
+  {
+    "type": "assistant",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "e3d28831-b1e9-461f-b7f1-626ef8cb9a27",
+    "message": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "name": "TodoWrite",
+          "id": "toolu_01P1SATpXKY5QY6LCLXnEGzS",
+          "input": {
+            "todos": [
+              {
+                "activeForm": "Reproducing the build error",
+                "content": "Reproduce the build error",
+                "status": "completed"
+              },
+              {
+                "activeForm": "Investigating the broken commit",
+                "content": "Diagnose the root cause - check 'broken' commit",
+                "status": "completed"
+              },
+              {
+                "activeForm": "Investigating actual build failure",
+                "content": "Investigate if the build actually fails as described",
+                "status": "in_progress"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "user",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "45a6ca0f-5e68-4d46-89ce-caeb1c3441ec",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01P1SATpXKY5QY6LCLXnEGzS",
+          "content": "Todos have been modified successfully. Ensure that you continue to use the todo list to track your progress. Please proceed with the current tasks if applicable"
+        }
+      ]
+    }
+  },
+  {
+    "type": "result",
+    "subtype": "error_max_turns",
+    "session_id": "fb93a387-e8e5-4543-8981-be8ea4514828",
+    "uuid": "952495d3-f4e2-47e6-b28c-fc3cd140936b",
+    "total_cost_usd": 0.38610810000000007,
+    "duration_ms": 104723,
+    "duration_api_ms": 91251,
+    "num_turns": 11,
+    "usage": {
+      "input_tokens": 11,
+      "output_tokens": 1818,
+      "cache_creation_input_tokens": 15627,
+      "cache_read_input_tokens": 242879
+    }
+  }
+]

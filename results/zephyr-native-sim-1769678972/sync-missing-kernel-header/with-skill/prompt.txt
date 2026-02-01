@@ -1,0 +1,53 @@
+You are debugging a Zephyr RTOS build failure for the synchronization sample application on the native_sim/native/64 board.
+
+## Your Task
+
+Fix the build error by modifying only the application source code. Do not change build configurations, board files, or Kconfig options.
+
+## Step 1: Reproduce the Error
+
+Run the build command to see the actual compilation error:
+
+```
+west build -b native_sim/native/64 samples/synchronization -p
+```
+
+Read the full error output carefully. Note which symbols are undeclared and which file is failing to compile.
+
+## Step 2: Diagnose the Root Cause
+
+The error involves missing kernel API symbols like K_FOREVER, K_SEM_DEFINE, K_THREAD_DEFINE, or k_tid_t. This typically means:
+
+1. A required header file is missing from the source file
+2. The Zephyr kernel header (`<zephyr/kernel.h>`) provides these fundamental types and macros
+3. Without this header, the compiler cannot resolve kernel primitives
+
+Use the Read tool to examine the failing source file. Check the #include directives at the top of the file. Compare against typical Zephyr application structure — kernel APIs require `#include <zephyr/kernel.h>`.
+
+## Step 3: Apply the Minimal Fix
+
+Add the missing header include if it's absent. Place it in the proper location:
+- After any feature test macros
+- Before other Zephyr subsystem headers
+- Typically as the first Zephyr include
+
+Use the Edit tool to add the missing line. Make no other changes — fix only what's broken.
+
+## Step 4: Verify the Fix
+
+Re-run the build command:
+
+```
+west build -b native_sim/native/64 samples/synchronization -p
+```
+
+The build should complete successfully with no compilation errors. If it still fails, re-examine the error output and ensure the header was added correctly.
+
+## Constraints
+
+- Modify only source files in samples/synchronization/
+- Do not change CMakeLists.txt, prj.conf, or any board configuration
+- Do not add unnecessary headers or make stylistic changes
+- Follow Zephyr's header include conventions: `#include <zephyr/subsystem/header.h>`
+
+Begin by running the build command.

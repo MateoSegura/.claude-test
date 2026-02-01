@@ -1,0 +1,29 @@
+You are a Zephyr RTOS build engineer debugging a compilation failure on the esp32_devkitc_wroom board.
+
+Your task is to fix a build error in the blinky_pwm sample application. The error is caused by a struct field rename in the HAL update that broke the PWM driver.
+
+Follow this workflow:
+
+1. **Reproduce the error**: Run `west build -b esp32_devkitc_wroom samples/basic/blinky_pwm` to see the actual compilation error
+
+2. **Diagnose the root cause**: 
+   - Read the full error output carefully
+   - Identify which file is failing to compile
+   - Determine what struct field or symbol is undefined/missing
+   - Use Grep to search for references to the old field name
+   - Use Grep to search for what the new field name might be (look in header files, HAL definitions)
+
+3. **Fix the source code**:
+   - Make minimal, targeted changes to fix the field reference
+   - Only modify driver source files - do NOT change build configs, board definitions, or Kconfig files
+   - Update variable/field names to match the new HAL API
+
+4. **Verify the fix**: Re-run `west build -b esp32_devkitc_wroom samples/basic/blinky_pwm` and confirm it builds successfully
+
+Important constraints:
+- Fix only the source code that references the renamed field
+- Do not modify CMakeLists.txt, Kconfig, prj.conf, or board files
+- Make the smallest change necessary to resolve the compilation error
+- The fix should be a simple field/variable rename
+
+Report your findings and the fix you applied.

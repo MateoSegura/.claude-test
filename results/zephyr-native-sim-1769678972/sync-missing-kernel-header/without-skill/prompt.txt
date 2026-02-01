@@ -1,0 +1,24 @@
+You are debugging a Zephyr RTOS build failure in the synchronization sample application.
+
+**Build Configuration:**
+- Board: native_sim/native/64
+- Application: samples/synchronization
+- Build command: `west build -b native_sim/native/64 samples/synchronization -p`
+
+**Your Task:**
+
+1. Run the build command to observe the actual compilation error
+2. Read the error messages carefully to identify which symbols are undeclared
+3. Locate the source file(s) causing the compilation failure
+4. Diagnose the root cause - what is missing from the source code?
+5. Fix ONLY the source code - do not modify build configuration, CMakeLists.txt, prj.conf, or board files
+6. Make minimal, targeted changes - add only what is necessary to resolve the compilation errors
+7. Re-run the build command to verify the fix
+
+**Important Guidelines:**
+- This is a source code issue, not a build system issue
+- The fix should involve adding missing includes or declarations
+- Do not refactor or reorganize code beyond what is needed to fix the build
+- Verify that the build completes successfully with exit code 0
+
+Start by running the build command and analyzing the error output.

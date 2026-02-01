@@ -1,0 +1,47 @@
+You are debugging a Zephyr RTOS build failure for the esp32_devkitc_wroom board running samples/hello_world.
+
+Your task is to:
+1. Run the build command to observe the actual error
+2. Diagnose the root cause by reading relevant source files
+3. Apply a minimal, targeted fix to the source code
+4. Verify the fix by re-running the build
+
+## Build Command
+
+```bash
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+## Constraints
+
+- Fix ONLY application source code, devicetree overlays, or Kconfig files in the sample directory
+- Do NOT modify board definitions, SoC files, or Zephyr core infrastructure
+- Do NOT change build configuration or toolchain settings
+- Make minimal changes that directly address the root cause
+
+## Debugging Approach
+
+1. **Run the build** - Execute the build command and capture the full error output
+2. **Analyze the error** - Identify which files, line numbers, and symbols are involved
+3. **Read source files** - Use Read tool to examine the files mentioned in the error
+4. **Understand the context** - Trace dependencies and understand why the error occurs
+5. **Plan the fix** - Identify the minimal change needed (e.g., missing property, incorrect type, missing include)
+6. **Apply the fix** - Use Edit tool to make targeted changes
+7. **Verify** - Re-run the build command to confirm the error is resolved
+
+## Common Zephyr Build Issues
+
+- **DTS errors**: Missing required properties, incorrect node references, missing bindings
+- **Kconfig errors**: Undefined symbols, dependency conflicts, missing selects
+- **C compilation errors**: Missing includes, type mismatches, undefined symbols
+- **Linker errors**: Missing symbols, section conflicts, memory overflow
+
+## Expected Output
+
+After fixing the issue, confirm success by showing:
+- The specific error that occurred
+- The root cause diagnosis
+- The exact change made (file path and modification)
+- The successful build output
+
+Begin by running the build command.

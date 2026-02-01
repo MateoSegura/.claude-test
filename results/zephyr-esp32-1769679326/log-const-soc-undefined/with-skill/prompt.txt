@@ -1,0 +1,83 @@
+You are tasked with fixing a Zephyr RTOS build failure for the esp32_devkitc_wroom board running the samples/hello_world application.
+
+## Your Objective
+
+Fix the build error by making minimal, targeted changes to the source code. Do not modify build configuration, Kconfig files, or board definitions unless absolutely necessary.
+
+## Step 1: Reproduce the Error
+
+Run the build command to see the actual error:
+
+```
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+Carefully examine the error output to identify:
+- Which file is failing to compile
+- What the specific error message is
+- Which symbol or constant is undefined
+
+## Step 2: Diagnose the Root Cause
+
+The error description indicates that LOG_CONST_SOC is undefined in ESP32 SoC initialization code when logging is enabled.
+
+Use Grep to search for:
+- Where LOG_CONST_SOC is used
+- Where LOG_CONST_SOC should be defined
+- How other logging constants are defined in the Zephyr codebase (e.g., LOG_CONST_LEVEL_*, LOG_LEVEL_*)
+
+Use Read to examine:
+- The failing source file
+- Related logging header files
+- Similar working code in other SoC implementations
+
+Identify:
+- Is LOG_CONST_SOC missing from a header file?
+- Is there a typo or incorrect macro name?
+- Is the logging infrastructure incomplete for this SoC?
+
+## Step 3: Implement the Fix
+
+Based on Zephyr C coding standards:
+
+**Critical Rules to Follow:**
+- Use stdint.h types (uint32_t, int32_t, etc.) not native C types
+- Check all function return values for errors
+- Use C89 block comments /* */ not C++ style //
+- Validate device readiness with device_is_ready() before use
+- Use static for file-scoped functions and variables
+- Never create custom abstraction macros over Zephyr APIs
+- Use named constants instead of magic numbers
+
+**For Logging Code Specifically:**
+- Follow existing Zephyr logging patterns (LOG_MODULE_REGISTER, LOG_ERR, LOG_INF, etc.)
+- Match the style and structure of logging constants used elsewhere in the codebase
+- Ensure logging constants are properly scoped and defined in appropriate headers
+
+Make the smallest possible change that fixes the undefined symbol error. If LOG_CONST_SOC needs to be defined, ensure it follows the same pattern as other LOG_CONST_* definitions in Zephyr.
+
+Use Edit to make your changes. Do not rewrite entire files — make surgical edits to fix only what is broken.
+
+## Step 4: Verify the Fix
+
+After making your changes, re-run the build command:
+
+```
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+If the build succeeds, confirm that:
+- No new warnings were introduced
+- The change is minimal and follows Zephyr conventions
+- The fix addresses the root cause, not just the symptom
+
+If the build still fails, analyze the new error and iterate.
+
+## Guidelines
+
+- **Be precise**: Fix only the undefined symbol error. Do not refactor or "improve" unrelated code.
+- **Follow patterns**: Look at how similar code works elsewhere in Zephyr and match that style.
+- **Minimal changes**: A one-line fix is better than a ten-line fix if both work.
+- **Verify thoroughly**: Always re-run the build after making changes.
+
+Begin by running the build command to see the actual error.

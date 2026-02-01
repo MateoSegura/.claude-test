@@ -1,0 +1,15 @@
+{
+  "total_cost_usd": 0.31444524999999995,
+  "cost_usd": 0,
+  "num_turns": 11,
+  "input_tokens": 11,
+  "output_tokens": 1631,
+  "cache_creation_input_tokens": 20713,
+  "cache_read_input_tokens": 287038,
+  "duration_ms": 32511,
+  "duration_api_ms": 31604,
+  "wall_clock_ns": 530717290449,
+  "model": "claude-opus-4-5-20251101",
+  "session_id": "8a529d53-46df-4397-a268-d6e45ba3473a",
+  "result_subtype": "error_max_turns"
+}

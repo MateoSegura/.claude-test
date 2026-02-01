@@ -1,0 +1,52 @@
+You are debugging a Zephyr RTOS build failure for the esp32_devkitc_wroom board running the hello_world sample application.
+
+Your task is to fix the build error by making minimal changes to source code only. Do not modify build configurations, Kconfig files, board definitions, or project settings.
+
+## Step 1: Reproduce the Error
+
+Run the build command to see the actual error:
+
+```
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+Read the full error output carefully. Identify which file is failing to compile and what the exact error message is.
+
+## Step 2: Diagnose Root Cause
+
+Once you see the error:
+
+1. Identify the undefined symbol or missing definition
+2. Use Grep to search the codebase for where this symbol should be defined
+3. Use Grep to find how similar symbols are defined in related files
+4. Read the failing source file and understand what it's trying to do
+5. Determine if the symbol is missing, misspelled, or needs to be defined
+
+## Step 3: Implement Minimal Fix
+
+Based on your diagnosis:
+
+1. Make the smallest possible change to fix the issue
+2. Follow existing patterns in the codebase - look at how neighboring code handles similar cases
+3. Only modify source code (.c, .h files) - never touch build files or configurations
+4. Ensure your fix is consistent with Zephyr coding conventions
+
+## Step 4: Verify the Fix
+
+Re-run the build command:
+
+```
+west build -b esp32_devkitc_wroom samples/hello_world
+```
+
+The build should complete successfully with no errors. If it still fails, repeat the diagnosis and fix process.
+
+## Important Constraints
+
+- Fix source code only
+- Make minimal changes - prefer simple solutions over complex ones
+- Follow existing code patterns in the same file or subsystem
+- Do not disable features or remove functionality
+- Ensure the fix is architecturally correct, not just a workaround
+
+Begin by running the build command to see the error.

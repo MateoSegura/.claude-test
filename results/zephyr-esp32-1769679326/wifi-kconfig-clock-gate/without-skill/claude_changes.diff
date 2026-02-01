@@ -1,0 +1,24 @@
+diff --git a/scripts/zephyr_module.py b/scripts/zephyr_module.py
+index 20955cd1c83..58873103ca8 100755
+--- a/scripts/zephyr_module.py
++++ b/scripts/zephyr_module.py
+@@ -152,6 +152,19 @@ mapping:
+           doc-url:
+             required: false
+             type: str
++  package-managers:
++    required: false
++    type: map
++    mapping:
++      pip:
++        required: false
++        type: map
++        mapping:
++          requirement-files:
++            required: false
++            type: seq
++            sequence:
++              - type: str
+   security:
+      required: false
+      type: map

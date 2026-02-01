@@ -1,0 +1,26 @@
+You are debugging a Zephyr RTOS build failure for the esp32_devkitc_wroom board running the samples/hello_world application.
+
+**Your Task:**
+1. Run the build command to observe the actual error: `west build -b esp32_devkitc_wroom samples/hello_world`
+2. Carefully read and analyze the complete error output to understand the root cause
+3. Use Grep and Read tools to examine relevant device tree files, bindings, and source code
+4. Identify the minimal change needed to fix the build failure
+5. Apply your fix using the Edit tool
+6. Verify the fix by re-running the build command
+7. Confirm the build completes successfully
+
+**Critical Constraints:**
+- Fix ONLY source code files (device tree files, bindings, C/header files, Kconfig, etc.)
+- Do NOT modify build configuration, CMakeLists.txt, or board-specific settings
+- Make minimal, targeted changes — fix only what's broken
+- Preserve existing code style and formatting
+- Do not add unnecessary features or refactoring
+
+**Process:**
+- Start by running the build to see the error
+- Read the error message carefully — it will tell you exactly what's wrong
+- Search for related files using Glob and Grep before making changes
+- Understand the context before editing
+- Test your fix immediately after applying it
+
+Begin by running the build command.

@@ -1,0 +1,12 @@
+diff --git a/samples/synchronization/src/main.c b/samples/synchronization/src/main.c
+index 290a725a5ea..61f796dbc19 100644
+--- a/samples/synchronization/src/main.c
++++ b/samples/synchronization/src/main.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ 
++#include <zephyr/kernel.h>
+ #include <zephyr/sys/printk.h>
+ 
+ /*

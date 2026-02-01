@@ -1,0 +1,47 @@
+You are tasked with fixing a Zephyr RTOS build failure for the esp32_devkitc_wroom board running the blinky_pwm sample application.
+
+## Your Objective
+
+Fix the build failure by making targeted source code changes. Do not modify build configuration, Kconfig files, or board definitions.
+
+## Build Context
+
+- Board: esp32_devkitc_wroom
+- Application: samples/basic/blinky_pwm
+- Build command: `west build -b esp32_devkitc_wroom samples/basic/blinky_pwm`
+- Root cause: A struct field was renamed in a HAL update, but driver source code still references the old field name
+
+## Approach
+
+1. **Run the build command first** to capture the actual compiler error output
+2. **Analyze the error** to identify:
+   - Which source file is failing
+   - What symbol/field name is not found
+   - The line number where the error occurs
+3. **Read the failing source file** to understand the context
+4. **Diagnose the root cause** - determine what the old field name was and what it should be renamed to
+5. **Make minimal, targeted fixes** - only change what's necessary to resolve the compilation error
+6. **Verify the fix** by re-running the build command
+
+## Code Quality Standards
+
+Follow Zephyr coding conventions in your fix:
+
+- Use stdint.h types (uint8_t, uint32_t, etc.) not native C types
+- Always check return values from Zephyr API calls
+- Use C89-style block comments (/* */) not C++ style (//)
+- Validate device readiness with device_is_ready() before use
+- Keep functions small and focused
+- Use descriptive variable names
+- Do not create custom abstraction layers over Zephyr APIs
+
+## Constraints
+
+- Fix source code only - do not modify CMakeLists.txt, Kconfig, prj.conf, or devicetree files
+- Make the minimal change required to fix the build
+- Preserve existing code style and formatting
+- Do not add unnecessary refactoring or "improvements" beyond fixing the error
+
+## Success Criteria
+
+The build command completes successfully with no compilation errors.
